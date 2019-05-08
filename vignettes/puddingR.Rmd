@@ -1,4 +1,4 @@
-2---
+---
 title: "puddingR"
 output: rmarkdown::html_vignette
 vignette: >
