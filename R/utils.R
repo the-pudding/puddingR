@@ -52,7 +52,7 @@ setup_dep_system <- function(packagedeps) {
 #'
 #' @noRd
 #'
-createDirectories <- function(dirs){
+create_directories <- function(dirs){
   # stop if no directories passed
   stopifnot(length(dirs) > 0)
   # generate full file paths for all dirs
@@ -69,7 +69,7 @@ createDirectories <- function(dirs){
 #' @param name Package / project
 #'
 #' @noRd
-createdesc <- function(name) {
+create_desc <- function(name) {
   desc <- desc::desc("!new")
   desc$add_me(role = "cre")
   desc$write(file.path(name, "DESCRIPTION"))
@@ -82,7 +82,7 @@ createdesc <- function(name) {
 #' Get current project
 #'
 #' @noRd
-getCurrentProj <- function(){
+get_current_proj <- function(){
   # try to access the current proj directory or fail silently
   current <- try(usethis::proj_get(), silent = TRUE)
   # if the above step produced an error, set current to NULL
@@ -96,7 +96,7 @@ getCurrentProj <- function(){
 #' Reset project to what it was before
 #'
 #' @noRd
-resetProj <- function(current) {
+reset_proj <- function(current) {
   # set the active project to the project defined in the argument
   usethis::proj_set(current, force = TRUE)
 }

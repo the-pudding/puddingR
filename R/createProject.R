@@ -3,8 +3,7 @@
 #' @param name File name for the project. Default: "analysis"
 #' @param title What the project does, one line, title case, Default: NULL
 #' @param folder Folder under which to create the new project, Default: getwd()
-#' @param dirs Character vector of new directories to create, Default: c("assets", "functions", "open_data", "plots", "processed_data",
-#'    "raw_data", "reports", "rmds", "rscripts")
+#' @param dirs Character vector of new directories to create, Default: c("assets", "functions", "open_data", "plots", "processed_data", #' "raw_data", "reports", "rmds", "rscripts")
 #' @param packagedeps Set which tool you would like to use for package reproducibility, Default: 'packrat'
 #' @param reset Whether to reset the active project to your new project, Default: TRUE
 #' @param open Whether the new project should open automatically, Default: TRUE
@@ -29,15 +28,20 @@
 #'  \code{\link[desc]{desc_set}}
 #' @rdname createProject
 #' @export
+#' @param defaultRmd Whether to automatically create an Rmd file to get you started, Default: TRUE
+#' @param brand How should the default Rmd file be branded? Options: "pudding", "polygraph", Default: 'pudding'
 #' @importFrom usethis create_project proj_set use_description proj_get
 #' @importFrom rstudioapi isAvailable openProject
 #' @importFrom desc desc_set
-createProject <- function(name = "analysis", title = NULL,
+#' @importFrom rmarkdown draft
+create_project <- function(name = "analysis", title = NULL,
                           folder = getwd(),
                           dirs = c("assets", "assets/data", "assets/data/open_data", "plots", "assets/data/processed_data", "assets/data/raw_data", "reports", "rmds"),
                           packagedeps = "packrat",
                           reset = TRUE,
-                          open = TRUE){
+                          open = TRUE,
+                          defaultRmd = TRUE,
+                          brand = "pudding"){
   # basic checks for missing information
   if (!is.character(name)) stop("name has to be a character")
   if (nchar(name) < 2) stop("name needs to have at least two characters")
@@ -46,7 +50,7 @@ createProject <- function(name = "analysis", title = NULL,
   packagedeps <- match.arg(packagedeps, okpackagedeps())
 
   # for later resetting the project
-  current <- getCurrentProj()
+  current <- get_current_proj()
 
   tryCatch({
 
@@ -70,7 +74,12 @@ createProject <- function(name = "analysis", title = NULL,
     setup_dep_system(packagedeps)
 
     # add new directories
-    createDirectories(dirs)
+    create_directories(dirs)
+
+    # if defaultRMD is true, then create an Rmd document
+    if (defaultRmd) {
+      rmarkdown::draft("rmds/analysis.Rmd", template = brand, package = "puddingR")
+    }
   },
   error = function(e){
     message(paste("Error:", e$message))
@@ -81,7 +90,7 @@ createProject <- function(name = "analysis", title = NULL,
   })
   # if argument reset is true, reset the project to the current one
   if (reset) {
-    resetProj(current)
+    reset_proj(current)
   }
 
   invisible(TRUE)

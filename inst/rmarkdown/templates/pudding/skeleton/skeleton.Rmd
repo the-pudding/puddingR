@@ -1,0 +1,179 @@
+---
+title: "Pudding Styled Report"
+author: 
+date: `r format(Sys.time(), '%d %B %Y')`
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction
+
+This is a good spot to add some of your initial thoughts. What questions are you trying to answer? Where did you get the data from? Include [links](https://pudding.cool) to your sources and things you found helpful along the way. Your future self will thank you.
+
+Also, this file is written in Rmarkdown. If you're new to Rmd, the [cheatsheet](https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf) from RStudio may be useful for you.
+
+### Load Packages
+
+Here are a few packages that I recommend using for Pudding analysis projects. Since I suggest doing R data analysis the "tidy" way, you can save yourself a step and install the whole `tidyverse`. If you don't have these packages installed on your machine, install them like this: `install.packages(tidyverse)` and then load them using `library()`.
+
+When you load `tidyverse` as a package, it automatically loads `ggplot2`, `dplyr`, `tidyr`, `readr`, `purrr`, `tibble`, `stringr`, and `forcats`.
+
+```{r load_packages}
+# I recommend always loading these
+
+# For general data cleaning and analysis
+library(tidyverse)
+
+# For keeping your files in relative directories
+library(here)
+
+###
+
+# These can be loaded on a case-by-case basis
+
+# If your data includes dates that need to be wrangled
+library(lubridate)
+
+# If you need to import data from Excel formats
+library(readxl)
+
+# If you need to import data from JSON formats
+library(jsonlite)
+
+# If you want to interact with Google Drive (e.g., upload or download files)
+library(googledrive)
+
+# If you want to download more than the 1st sheet of a Google Sheet
+library(googlesheets)
+
+# For interactive/searchable tables in your report
+library(DT)
+
+# For incorporating functional Python scripts
+library(reticulate)
+# Enter which version of python you want to use below and uncomment the code
+# reticulate::use_python("~/your_name/bin/python")
+```
+
+Arguments from any of these packages can be loaded independently or with their package name. For instance, `dplyr`'s function `mutate` can be run as `...mutate()` or, to ensure that the _correct_ mutate function is being called, you can specify that you want the mutate function from the `dplyr` package like this `dplyr::mutate()`. Both ways work, but the 2nd is more helpful when looking back at old code.
+
+### Load Data
+
+I highly recommend using the `here` package ([more info](https://github.com/jennybc/here_here)) to keep track of your file locations and make sure that file paths don't break if you share your project with someone else. Here's how you may use it to import a new data file:
+
+```{r load_data}
+# use here to find the file you want and save the file path to a variable
+# in this case, the path would look like "working_directory/raw_data/data.csv"
+file_path <- here::here("raw_data", "data.csv")
+
+# from csv
+data <- readr::read_csv(file_path)
+
+# from Excel (assuming file_path led to a .xls or .xlsx file)
+data <- readxl::read_excel(file_path, sheet = 1)
+
+# from JSON file (assuming file_path led to a .json file)
+data <- jsonlite::fromJSON(file_path)
+```
+
+If your data exists in Google Drive, you can still access it from right here.
+
+If you are only interested in the first sheet of a google sheet, you can use either `googledrive` or `googlesheets` to access it. I recommend `googledrive`. 
+
+Let's say you have a file in your Google Drive called "myFile". You can download it to your `raw_data` folder and then read it into R like this:
+
+```{r load_gd}
+googledrive::drive_download("myFile", 
+                            path = here::here("raw_data", "myLocalFile.csv"), 
+                            type = "csv", 
+                            overwrite = TRUE)
+
+data <- readr::read_csv(here::here("raw_data", "myLocalFile.csv"))
+```
+
+Watch out for that `overwrite = TRUE` argument, though! It will download the latest version of your google sheet and overwrite the old one.
+
+If you don't know the sheet name, you can use the URL to the sheet instead:
+
+```{r load_gd_2}
+sheetID <- googledrive::as_id("https://docs.google.com/spreadsheets/d/1TW1skGoCvdOyIdjD-2yjiQ6YWAA6EdJTk9g03FeHYtM/edit#gid=772914444")
+
+googledrive::drive_download(sheetID, 
+                            path = here("raw_data", "myLocalFile.csv"), 
+                            overwrite = TRUE)
+
+data <- readr::read_csv(here::here("raw_data", "myLocalFile.csv"))
+```
+
+If you need to access anything other than the first sheet in a Google Sheet, use the `googlesheets` package instead. 
+
+*Heads up*, you may need to authenticate Google Docs by running `gs_ls()` and responding to the prompt that opens in your browser.
+
+Here's how to load any sheet:
+
+```{r load_gs}
+# Specify the Title of the File
+worksheet <- gs_title("My Awesome File")
+
+# Specify the sheet you need when calling for the file
+googlesheets::gs_download(from = worksheet,
+                          # enter the name of the tab you want here
+                          ws = "name_of_tab",
+                          to = here::here("raw_data", "myLocalFile.csv"))
+
+data <- readr::read_csv(here::here("raw_data", "myLocalFile.csv"))
+```
+
+Andrew Ba Tran includes many more tips on importing & wrangling data in R [here](https://learn.r-journalism.com/en/importing_exporting/).
+
+## Data Analysis
+
+Here's where all of your beautiful data analysis will live.
+
+All of your code that you wish to execute goes inside code chunks like this (shortcut: Cmd + option + i)
+
+```{r example}
+x <- 5 + 2
+```
+
+As you can imagine, R scripts run automatically, and are indicated by the `{r}` at the head of each code chunk. To see what other code languages are supported, run `knitr::knit_engines$get()`.
+
+### Incorporating Python
+
+For instance, you can run python scripts like this:
+
+```{python example}
+x = 'hello, python world!'
+print(x.split(' '))
+```
+However, the fine print of using other language engines (except for `r`, `python`, and `julia`) in R is that they _don't write to memory_. That means that a variable assigned in one `bash` code chunk won't be available in a separate `bash` code chunk. If, instead, you're using `r`, `python` or `julia`, the variables you assign *are* available in other code chunks...of the same language. You can't assign a variable in a `python` code chunk and access it in an `r` code chunk. At least not explicitly. You can access them by defining their environment first though by defining objects created in R as `r.x` and those created in python as `py.x`
+
+```{python assignment}
+# define x in python 
+x = 10
+
+# print to check it worked
+print(x)
+```
+
+```{r reading_python}
+# Access the x variable defined in python 
+py$x
+```
+
+Lots more detail on what you can and can't do with Python in R [here](https://bookdown.org/yihui/rmarkdown/language-engines.html#python) and about the `reticulate` package that makes this possible [here](https://rstudio.github.io/reticulate/).
+
+### Interactive Tables
+
+By default, outputing an .Rmd file to HTML will generate tables that you can click through. But if you'd like to add some sorting and a search bar, we'll need to use the `datatable` function from the `DT` package. 
+
+Like this:
+
+```{r usage}
+DT::datatable(data, rownames = FALSE, filter = "top", options = list(pageLength = 5, scrollX = TRUE))
+```
+
+Find lots of other great Rmd tricks in this [article by Yan Holtz](https://holtzy.github.io/Pimp-my-rmd/#use_dt_for_tables).
