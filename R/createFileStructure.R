@@ -2,16 +2,16 @@
 #' @description Creates a new R project with the folder structure used in Pudding R projects
 #' @return OUTPUT_DESCRIPTION
 #' @details DETAILS
-#' @examples 
+#' @examples
 #' \dontrun{
 #' createFileStructure("analysis")
 #' }
-#' @seealso 
+#' @seealso
 #'  \code{\link[usethis]{create_package}},\code{\link[usethis]{use_directory}}
 #'  \code{\link[rstudioapi]{isAvailable}}
 #'  \code{\link[purrr]{map2}}
 #' @rdname createFileStructure
-#' @export 
+#' @export
 #' @param directory Parent directory for the project to be created in. If the typed directory does not exist, it will be created., Default: 'analysis'
 #' @importFrom usethis create_project use_directory
 #' @importFrom rstudioapi isAvailable
@@ -24,6 +24,9 @@ createFileStructure <- function(directory = "analysis"){
   # Create new R Project
   usethis::create_project(parentDir, rstudio = rstudioapi::isAvailable(),
   open = interactive())
+
+  # Set the newly created project to active
+  usethis::proj_get()
 
   # Remove the added R folder in favor of our specific file structure
   file.remove("Analysis/R")
