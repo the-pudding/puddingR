@@ -39,7 +39,6 @@ createProject <- function(name = "analysis", title = NULL,
                           reset = TRUE,
                           open = TRUE){
   # basic checks for missing information
-  if (missing(name)) stop("oops! you need a name for your project")
   if (!is.character(name)) stop("name has to be a character")
   if (nchar(name) < 2) stop("name needs to have at least two characters")
 
@@ -69,6 +68,9 @@ createProject <- function(name = "analysis", title = NULL,
 
     # setup system for dependencies management
     setup_dep_system(packagedeps)
+
+    # add new directories
+    createDirectories(dirs)
   },
   error = function(e){
     message(paste("Error:", e$message))
