@@ -4,14 +4,11 @@
 #' @details DETAILS
 #' @examples
 #' \dontrun{
-#' if(interactive()){
-#'  #EXAMPLE1
-#'  }
+#' createFileStructure("analysis")
 #' }
 #' @seealso
 #'  \code{\link[usethis]{create_package}},\code{\link[usethis]{use_directory}}
 #'  \code{\link[rstudioapi]{isAvailable}}
-#'  \code{\link[base]{c}}
 #'  \code{\link[purrr]{map2}}
 #' @rdname createFileStructure
 #' @export

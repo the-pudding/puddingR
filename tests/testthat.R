@@ -1,4 +1,4 @@
 library(testthat)
 library(puddingR)
 
-test_check("puddingR")
+#test_check("puddingR")
