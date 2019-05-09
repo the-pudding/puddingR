@@ -34,7 +34,7 @@
 #' @importFrom desc desc_set
 createProject <- function(name = "analysis", title = NULL,
                           folder = getwd(),
-                          dirs = c("assets",  "assets/data/open_data", "plots", "assets/data/processed_data", "assets/data/raw_data", "reports", "rmds"),
+                          dirs = c("assets", "assets/data", "assets/data/open_data", "plots", "assets/data/processed_data", "assets/data/raw_data", "reports", "rmds"),
                           packagedeps = "packrat",
                           reset = TRUE,
                           open = TRUE){
