@@ -82,7 +82,7 @@ create_project <- function(name = "analysis", title = NULL,
       rmarkdown::draft(paste0(name, "/rmds/analysis.Rmd"), template = brand, package = "puddingR", edit = FALSE)
 
       # open file
-      rstudioapi::navigateToFile(here::here("rmds/analysis.Rmd"))
+      rstudioapi::navigateToFile(file.path(folder, name, "rmds/analysis.Rmd"))
     }
   },
   error = function(e){
