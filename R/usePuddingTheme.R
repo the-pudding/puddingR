@@ -27,6 +27,7 @@ puddingTheme <- function(toc = TRUE,
 
   # call the base html_document function
   rmarkdown::html_document(theme = "lumen",
+                           highlight = "bclear",
                            css = css,
                            toc = toc,
                            toc_float = TRUE,

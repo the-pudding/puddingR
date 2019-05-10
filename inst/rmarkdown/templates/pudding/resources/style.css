@@ -21,6 +21,20 @@ pre {
   border: none
 }
 
+/*---- Header ----*/
+header{
+  margin-bottom: 4rem;
+  padding: 2rem 0;
+  text-align: center;
+  box-shadow: 0 7px 7px -7px var(--gray-light);
+}
+
+header img{
+  max-width: 144px;
+  height: auto;
+
+}
+
 /*----- Links ----- */
 a {
   color: var(--font);
@@ -81,15 +95,15 @@ div.tocify{
 .btn, .btn-default{
   border: none;
   font-weight: normal;
-  background-color: var(--accent);
-  color: var(--bg);
+  background-color: var(--bg);
+  color: var(--accent);
   padding: 0.25rem 0.5rem;
   transition: 100ms ease-in-out;
 }
 
 .btn:hover, .btn-default:hover{
   border: none;
-  background-color: var(--a);
+  background-color: var(--accent);
   color: var(--bg);
   transition: 100ms ease-in-out;
 }

@@ -1,7 +1,7 @@
 ---
 title: "Pudding Styled Report"
 author: 
-date: `r format(Sys.time(), '%d %B %Y')`
+date: "Last updated: `r format(Sys.time(), '%d %B %Y')`"
 output: 
   puddingR::puddingTheme
 ---
@@ -136,7 +136,7 @@ Here's where all of your beautiful data analysis will live.
 
 All of your code that you wish to execute goes inside code chunks like this (shortcut: Cmd + option + i)
 
-```{r example}
+```{r example_r}
 x <- 5 + 2
 ```
 
@@ -146,7 +146,7 @@ As you can imagine, R scripts run automatically, and are indicated by the `{r}` 
 
 For instance, you can run python scripts like this:
 
-```{python example}
+```{python example_py}
 x = 'hello, python world!'
 print(x.split(' '))
 ```
