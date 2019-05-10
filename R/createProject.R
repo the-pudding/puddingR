@@ -99,11 +99,12 @@ create_project <- function(name = "analysis", title = NULL,
 
   # if argument open is true, open the project in RStudio
   if (open){
-    rstudioapi::openProject(file.path(folder, name), newSession = TRUE)
+    rstudioapi::openProject(file.path(folder, name), newSession = FALSE)
 
     if (defaultRmd) {
       # open file
       rstudioapi::navigateToFile(file.path(folder, name, "rmds/analysis.Rmd"))
     }
   }
+
 }
