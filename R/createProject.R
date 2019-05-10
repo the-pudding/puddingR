@@ -75,11 +75,6 @@ create_project <- function(name = "analysis", title = NULL,
 
     # add new directories
     create_directories(dirs)
-
-    # if defaultRMD is true, then create an Rmd document
-    if (defaultRmd) {
-      rmarkdown::draft("rmds/analysis.Rmd", template = brand, package = "puddingR")
-    }
   },
   error = function(e){
     message(paste("Error:", e$message))
@@ -91,6 +86,11 @@ create_project <- function(name = "analysis", title = NULL,
   # if argument reset is true, reset the project to the current one
   if (reset) {
     reset_proj(current)
+  }
+
+  # if defaultRMD is true, then create an Rmd document
+  if (defaultRmd) {
+    rmarkdown::draft("rmds/analysis.Rmd", template = brand, package = "puddingR")
   }
 
   invisible(TRUE)
