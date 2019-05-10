@@ -1,4 +1,4 @@
 name: Pudding Report
 description: >
  Default template for Pudding editorial project analyses
-create_dir: true
+create_dir: false
