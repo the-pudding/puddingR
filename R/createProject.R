@@ -101,6 +101,10 @@ create_project <- function(name = "analysis", title = NULL,
   if (open){
     rstudioapi::openProject(file.path(folder, name), newSession = FALSE)
 
+    # set the current project to the new one
+    usethis::proj_set(file.path(folder, name),
+                      force = TRUE)
+
     if (defaultRmd) {
       # open file
       rstudioapi::navigateToFile(file.path(folder, name, "rmds/analysis.Rmd"))
