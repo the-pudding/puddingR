@@ -1,1 +1,4 @@
 name: Pudding Report
+description: >
+Default report for analysis on The Pudding editorial projects
+create_dir: false
