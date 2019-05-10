@@ -78,7 +78,7 @@ a:hover{
 /*--- Table of Contents ----*/
 #TOC {
   position: fixed;
-  margin: 8.75rem, 0 1.5rem 0;
+  margin: 1.5rem, 0 1.5rem 0;
 
 }
 
@@ -109,6 +109,11 @@ div.tocify{
   border-left: 2px solid var(--accent);
   color: var(--gray-dark);
   border-radius: 0px;
+}
+
+.logo{
+  max-width: 144px;
+  margin-bottom: 2rem;
 }
 
 /* ------ This is just to fix the bug on Safari where table of content is on top of content */
