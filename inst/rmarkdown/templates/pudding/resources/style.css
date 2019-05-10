@@ -1,0 +1,78 @@
+body{
+  --accent: #ff533d;
+  --font: #282828;
+  --bg: #ffffff;
+  --gray-light: #c9c9c9;
+  --gray: #969696;
+  --gray-dark: #5b5b5b
+}
+
+h1 {
+  font-size: 36px;
+  text-align: center;
+  margin-top: 2rem;
+}
+
+p {
+  font-size: 16px;
+}
+
+pre {
+  border: none
+}
+
+/*----- Links ----- */
+a {
+  color: var(--font);
+  border-bottom: 1px solid var(--font);
+  transition: 300ms ease-in-out;
+}
+
+a:hover{
+  color: var(--accent);
+  border-bottom: 1px solid var(--accent);
+  transition: 300ms ease-in-out;
+}
+
+/*--- Table of Contents ----*/
+#TOC {
+  position: fixed;
+  margin: 1.5rem, 0 1.5rem 0;
+
+}
+
+div.tocify{
+  width: 20%;
+  max-width: 16.25rem;
+  max-height: 85%;
+}
+
+.tocify{
+  overflow: auto;
+  border: none;
+  color: var(--gray);
+}
+
+.list-group-item{
+  padding: 0.5rem;
+  border-left: 1px solid var(--bg);
+}
+
+.list-group-item:active, .list-group-item:hover {
+  border-left: 1px solid var(--accent);
+  color: var(--gray-dark);
+}
+
+/* ------ This is just to fix the bug on Safari where table of content is on top of content */
+.toc-content {
+  margin-left: 210px
+}
+
+/*---- Buttons ------*/
+.btn, .btn-default{
+  border: none;
+  font-weight: normal;
+  background-color: var(--accent);
+  color: var(--bg);
+  padding: 0.25rem 0.5rem;
+}

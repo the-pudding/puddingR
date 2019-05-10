@@ -7,7 +7,7 @@
 create_project(name = "analysis", title = NULL, folder = getwd(),
   dirs = c("assets", "assets/data", "assets/data/open_data", "plots",
   "assets/data/processed_data", "assets/data/raw_data", "reports", "rmds"),
-  packagedeps = "packrat", reset = TRUE, open = TRUE,
+  packagedeps = "packrat", reset = FALSE, open = FALSE,
   defaultRmd = TRUE, brand = "pudding")
 }
 \arguments{
@@ -21,9 +21,9 @@ create_project(name = "analysis", title = NULL, folder = getwd(),
 
 \item{packagedeps}{Set which tool you would like to use for package reproducibility, Default: 'packrat'}
 
-\item{reset}{Whether to reset the active project to your new project, Default: TRUE}
+\item{reset}{Whether to reset the active project to your old project, Default: FALSE}
 
-\item{open}{Whether the new project should open automatically, Default: TRUE}
+\item{open}{Whether the new project should open a new session, Default: FALSE}
 
 \item{defaultRmd}{Whether to automatically create an Rmd file to get you started, Default: TRUE}
 
