@@ -25,13 +25,15 @@ pre {
 a {
   color: var(--font);
   border-bottom: 1px solid var(--font);
-  transition: 300ms ease-in-out;
+  transition: 100ms ease-in-out;
+  text-decoration: none;
 }
 
 a:hover{
   color: var(--accent);
   border-bottom: 1px solid var(--accent);
-  transition: 300ms ease-in-out;
+  transition: 100ms ease-in-out;
+  text-decoration: none;
 }
 
 /*--- Table of Contents ----*/
@@ -45,6 +47,7 @@ div.tocify{
   width: 20%;
   max-width: 16.25rem;
   max-height: 85%;
+  border-radius: 0px;
 }
 
 .tocify{
@@ -55,12 +58,18 @@ div.tocify{
 
 .list-group-item{
   padding: 0.5rem;
-  border-left: 1px solid var(--bg);
+  border-color: none;
+  border-left: 2px solid var(--bg);
+  background-color: transparent;
+  border-radius: 0px;
 }
 
-.list-group-item:active, .list-group-item:hover {
-  border-left: 1px solid var(--accent);
+.list-group-item:active, .list-group-item:hover, .list-group-item.active {
+  background-color: transparent;
+  border-color: none;
+  border-left: 2px solid var(--accent);
   color: var(--gray-dark);
+  border-radius: 0px;
 }
 
 /* ------ This is just to fix the bug on Safari where table of content is on top of content */
@@ -75,4 +84,12 @@ div.tocify{
   background-color: var(--accent);
   color: var(--bg);
   padding: 0.25rem 0.5rem;
+  transition: 100ms ease-in-out;
+}
+
+.btn:hover, .btn-default:hover{
+  border: none;
+  background-color: var(--a);
+  color: var(--bg);
+  transition: 100ms ease-in-out;
 }

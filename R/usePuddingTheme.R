@@ -22,6 +22,7 @@ puddingTheme <- function(toc = TRUE,
 
   # get the locations of resource files located within the package
   css <- system.file("rmarkdown", "templates", "pudding", "resources", "style.css", package = "puddingR")
+  header <- system.file("rmarkdown", "templates", "pudding", "resources", "header.html", package = "puddingR")
   #template <-system.file("rmarkdown", "templates", "pudding", "resources", "template_pudding.html", package = "puddingR")
 
   # call the base html_document function
@@ -29,9 +30,10 @@ puddingTheme <- function(toc = TRUE,
                            css = css,
                            toc = toc,
                            toc_float = TRUE,
-                           toc_depth = 2,
+                           toc_depth = 3,
                            number_sections = number_sections,
                            df_print = "paged",
                            code_folding = code_folding,
+                           includes = rmarkdown::includes(before_body = header)
                            )
 }
