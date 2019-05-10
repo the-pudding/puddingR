@@ -3,7 +3,7 @@ title: "Pudding Styled Report"
 author: 
 date: `r format(Sys.time(), '%d %B %Y')`
 output: 
-  puddingR::usePuddingTheme
+  puddingR::puddingTheme
 ---
 
 ```{r setup, include=FALSE}

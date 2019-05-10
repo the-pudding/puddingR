@@ -1,4 +1,22 @@
-usePuddingTheme <- function(toc = TRUE,
+#' @title Use Pudding Theme
+#' @description This is used within the YAML of a new Rmd document to use the Pudding Styled Theme
+#' @param toc Whether to include a table of contents automatically, Default: TRUE
+#' @param code_folding Should code be showing or hidden by default (options: "show", "hide"), Default: 'show'
+#' @param number_sections Should each chapter be numbered by default?, Default: FALSE
+#' @return OUTPUT_DESCRIPTION
+#' @details DETAILS
+#' @examples
+#' \dontrun{
+#' if(interactive()){
+#'  #EXAMPLE1
+#'  }
+#' }
+#' @seealso
+#'  \code{\link[rmarkdown]{html_document}}
+#' @rdname puddingTheme
+#' @export
+#' @importFrom rmarkdown html_document
+puddingTheme <- function(toc = TRUE,
                             code_folding = "show",
                             number_sections = FALSE) {
 
