@@ -13,6 +13,11 @@ h1 {
   margin-top: 2rem;
 }
 
+h1.title{
+  font-weight: bold;
+  color: var(--accent);
+}
+
 p {
   font-size: 16px;
 }
@@ -35,6 +40,22 @@ header img{
 
 }
 
+#header {
+  margin-bottom: 6rem;
+}
+
+.author{
+  text-align: center;
+  font-size: 16px;
+  color: var(--font);
+}
+
+.date{
+  font-size: 14px;
+  color: var(--gray);
+  text-align: center;
+}
+
 /*----- Links ----- */
 a {
   color: var(--font);
@@ -50,10 +71,14 @@ a:hover{
   text-decoration: none;
 }
 
+.dropdown-menu a{
+  border-bottom: none;
+}
+
 /*--- Table of Contents ----*/
 #TOC {
   position: fixed;
-  margin: 1.5rem, 0 1.5rem 0;
+  margin: 8.75rem, 0 1.5rem 0;
 
 }
 
@@ -99,6 +124,7 @@ div.tocify{
   color: var(--accent);
   padding: 0.25rem 0.5rem;
   transition: 100ms ease-in-out;
+  margin-top: 0px;
 }
 
 .btn:hover, .btn-default:hover{
@@ -106,4 +132,5 @@ div.tocify{
   background-color: var(--accent);
   color: var(--bg);
   transition: 100ms ease-in-out;
+  margin-top: 0px;
 }
