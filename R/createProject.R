@@ -6,7 +6,7 @@
 #' @param dirs Character vector of new directories to create, Default: c("assets", "functions", "open_data", "plots", "processed_data", #' "raw_data", "reports", "rmds", "rscripts")
 #' @param packagedeps Set which tool you would like to use for package reproducibility, Default: 'packrat'
 #' @param reset Whether to reset the active project to your old project, Default: FALSE
-#' @param open Whether the new project should open automatically, Default: TRUE
+#' @param open Whether the new project should open a new session, Default: FALSE
 #' @return OUTPUT_DESCRIPTION
 #' @details DETAILS
 #' @examples
@@ -80,6 +80,9 @@ create_project <- function(name = "analysis", title = NULL,
     # if defaultRMD is true, then create an Rmd document
     if (defaultRmd) {
       rmarkdown::draft(paste0(name, "/rmds/analysis.Rmd"), template = brand, package = "puddingR", edit = FALSE)
+
+      # open file
+      rstudioapi::navigateToFile(file.path(folder, name, "rmds/analysis.Rmd"))
     }
   },
   error = function(e){
@@ -96,15 +99,10 @@ create_project <- function(name = "analysis", title = NULL,
     reset_proj(current)
   }
 
+
   # if argument open is true, open the project in RStudio
   if (open){
-    rstudioapi::openProject(file.path(folder, name), newSession = FALSE)
-
-
-    if (defaultRmd) {
-      # open file
-      rstudioapi::navigateToFile(file.path(folder, name, "rmds/analysis.Rmd"))
-    }
+    rstudioapi::openProject(file.path(folder, name), newSession = TRUE)
   }
 
 
