@@ -79,7 +79,7 @@ create_project <- function(name = "analysis", title = NULL,
 
     # if defaultRMD is true, then create an Rmd document
     if (defaultRmd) {
-      rmarkdown::draft("rmds/analysis.Rmd", template = brand, package = "puddingR", edit = FALSE)
+      rmarkdown::draft(paste0(name, "/rmds/analysis.Rmd"), template = brand, package = "puddingR", edit = FALSE)
     }
   },
   error = function(e){
