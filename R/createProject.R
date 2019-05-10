@@ -80,9 +80,6 @@ create_project <- function(name = "analysis", title = NULL,
     # if defaultRMD is true, then create an Rmd document
     if (defaultRmd) {
       rmarkdown::draft(paste0(name, "/rmds/analysis.Rmd"), template = brand, package = "puddingR", edit = FALSE)
-
-      # open file
-      rstudioapi::navigateToFile(file.path(folder, name, "rmds/analysis.Rmd"))
     }
   },
   error = function(e){
@@ -103,5 +100,10 @@ create_project <- function(name = "analysis", title = NULL,
   # if argument open is true, open the project in RStudio
   if (open){
     rstudioapi::openProject(file.path(folder, name), newSession = TRUE)
+
+    if (defaultRmd) {
+      # open file
+      rstudioapi::navigateToFile(file.path(folder, name, "rmds/analysis.Rmd"))
+    }
   }
 }
