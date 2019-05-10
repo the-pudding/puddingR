@@ -39,7 +39,7 @@ create_project <- function(name = "analysis", title = NULL,
                           dirs = c("assets", "assets/data", "assets/data/open_data", "plots", "assets/data/processed_data", "assets/data/raw_data", "reports", "rmds"),
                           packagedeps = "packrat",
                           reset = FALSE,
-                          open = TRUE,
+                          open = FALSE,
                           defaultRmd = TRUE,
                           brand = "pudding"){
   # basic checks for missing information
