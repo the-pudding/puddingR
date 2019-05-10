@@ -5,7 +5,7 @@
 #' @param folder Folder under which to create the new project, Default: getwd()
 #' @param dirs Character vector of new directories to create, Default: c("assets", "functions", "open_data", "plots", "processed_data", #' "raw_data", "reports", "rmds", "rscripts")
 #' @param packagedeps Set which tool you would like to use for package reproducibility, Default: 'packrat'
-#' @param reset Whether to reset the active project to your new project, Default: TRUE
+#' @param reset Whether to reset the active project to your old project, Default: FALSE
 #' @param open Whether the new project should open automatically, Default: TRUE
 #' @return OUTPUT_DESCRIPTION
 #' @details DETAILS
@@ -38,7 +38,7 @@ create_project <- function(name = "analysis", title = NULL,
                           folder = getwd(),
                           dirs = c("assets", "assets/data", "assets/data/open_data", "plots", "assets/data/processed_data", "assets/data/raw_data", "reports", "rmds"),
                           packagedeps = "packrat",
-                          reset = TRUE,
+                          reset = FALSE,
                           open = TRUE,
                           defaultRmd = TRUE,
                           brand = "pudding"){
@@ -89,26 +89,27 @@ create_project <- function(name = "analysis", title = NULL,
     unlink(file.path(folder, name), recursive = TRUE)
     message(sprintf("Oops! An error was found and the `%s` directory was deleted", name)) #nolint
   })
-  # if argument reset is true, reset the project to the current one
+
+
+  # if argument reset is true, reset the project to the old one
   if (reset) {
     reset_proj(current)
   }
-
-
-  invisible(TRUE)
 
   # if argument open is true, open the project in RStudio
   if (open){
     rstudioapi::openProject(file.path(folder, name), newSession = FALSE)
 
-    # set the current project to the new one
-    usethis::proj_set(file.path(folder, name),
-                      force = TRUE)
 
     if (defaultRmd) {
       # open file
       rstudioapi::navigateToFile(file.path(folder, name, "rmds/analysis.Rmd"))
     }
   }
+
+
+  invisible(TRUE)
+
+
 
 }
