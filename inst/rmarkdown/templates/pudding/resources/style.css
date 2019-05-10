@@ -28,6 +28,7 @@ pre {
 
 /*---- Header ----*/
 header{
+  display: none;
   margin-bottom: 4rem;
   padding: 2rem 0;
   text-align: center;
