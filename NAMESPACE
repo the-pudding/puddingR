@@ -2,9 +2,11 @@
 
 export(create_project)
 export(puddingTheme)
+export(render_codebook)
 importFrom(desc,desc_set)
 importFrom(rmarkdown,draft)
 importFrom(rmarkdown,html_document)
+importFrom(rmarkdown,render)
 importFrom(rstudioapi,isAvailable)
 importFrom(rstudioapi,openProject)
 importFrom(usethis,create_project)

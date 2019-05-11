@@ -1,0 +1,4 @@
+name: Codebook
+description: >
+ Default template for metadata in Pudding data sharing
+create_dir: false
