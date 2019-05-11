@@ -103,7 +103,7 @@ Watch out for that `overwrite = TRUE` argument, though! It will download the lat
 If you don't know the sheet name, you can use the URL to the sheet instead:
 
 ```{r load_gd_2}
-sheetID <- googledrive::as_id("https://docs.google.com/spreadsheets/d/1TW1skGoCvdOyIdjD-2yjiQ6YWAA6EdJTk9g03FeHYtM/edit#gid=772914444")
+sheetID <- googledrive::as_id("https://docs.google.com/spreadsheets/...")
 
 googledrive::drive_download(sheetID, 
                             path = here("raw_data", "myLocalFile.csv"), 
@@ -114,7 +114,7 @@ data <- readr::read_csv(here::here("raw_data", "myLocalFile.csv"))
 
 If you need to access anything other than the first sheet in a Google Sheet, use the `googlesheets` package instead. 
 
-*Heads up*, you may need to authenticate Google Docs by running `gs_ls()` and responding to the prompt that opens in your browser.
+>*Heads up*, you may need to authenticate Google Docs by running `gs_ls()` and responding to the prompt that opens in your browser.
 
 Here's how to load any sheet:
 

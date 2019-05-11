@@ -104,7 +104,7 @@ div.tocify{
   border-radius: 0px;
 }
 
-.list-group-item:active, .list-group-item:hover, .list-group-item.active {
+.list-group-item:active, .list-group-item:hover, .list-group-item .active {
   background-color: transparent;
   border-color: none;
   border-left: 2px solid var(--accent);
@@ -139,4 +139,12 @@ div.tocify{
   color: var(--bg);
   transition: 100ms ease-in-out;
   margin-top: 0px;
+}
+
+/*---- Misc ----*/
+blockquote{
+  background-color: #f4ecf7;
+  border-left: 5px solid #a239ca;
+  font-size: 18px;
+  padding: 2rem;
 }
