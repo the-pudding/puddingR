@@ -4,7 +4,7 @@ author:
 date: 
 output: 
   github_document:
-    html_preview: false
+    html_preview: true
 params: 
   directory: paste0(getwd(), "/assets/data/open_data/intermediate/")
   
@@ -20,15 +20,31 @@ This file was last updated: `r format(Sys.time(), '%B %d, %Y')`
 
 `r print(params$directory)`
 
-
-```{r echo = FALSE}
+```{r}
 md <- list.files(path = params$directory,
                    pattern = '*.md', 
                    recursive = T)
+```
 
-chunks <- paste0("```{r child = '", md, "'}\n```\n")
+
+```{r}
+purrr::walk(.x = md, .f = function(x){
+  knitr::knit_child(paste0(getwd(), "/assets/data/open_data/intermediate/", x))
+})
+```
+
+
+```{r echo = FALSE, results='asis'}
+
+
+chunks <- paste0("```{r child = '", md, "' eval = TRUE}\n test \n ```\n")
  
 cat(chunks, sep = '\n')
 ```
  
+## Session Info
+
+```{r session_info, include=TRUE, echo=TRUE, results='markup'}
+devtools::session_info()
+```
 
