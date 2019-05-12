@@ -6,7 +6,7 @@ output:
   github_document:
     html_preview: true
 params: 
-  directory: paste0(getwd(), "/assets/data/open_data/intermediate/")
+  directory: "auto"
   
 ---
 
@@ -18,33 +18,28 @@ This folder contains all of the data used in The Pudding essay [My Awesome Essay
 
 This file was last updated: `r format(Sys.time(), '%B %d, %Y')`
 
-`r print(params$directory)`
+```{r echo = FALSE}
+directory <- case_when(
+  params$directory == "auto" ~ paste0(getwd(), "/assets/data/open_data/intermediate/"),
+  TRUE ~ params$directory
+)
 
-```{r}
-md <- list.files(path = params$directory,
+md <- list.files(path = directory,
                    pattern = '*.md', 
                    recursive = T)
 ```
 
 
-```{r}
+```{r echo = FALSE, message = FALSE, results = "asis"}
 purrr::walk(.x = md, .f = function(x){
-  knitr::knit_child(paste0(getwd(), "/assets/data/open_data/intermediate/", x))
+  cat(knitr::knit_child(paste0(directory, x), quiet = TRUE))
 })
 ```
 
-
-```{r echo = FALSE, results='asis'}
-
-
-chunks <- paste0("```{r child = '", md, "' eval = TRUE}\n test \n ```\n")
- 
-cat(chunks, sep = '\n')
-```
  
 ## Session Info
 
-```{r session_info, include=TRUE, echo=TRUE, results='markup'}
+```{r session_info, include = TRUE, echo = FALSE, results = 'markup'}
 devtools::session_info()
 ```
 
