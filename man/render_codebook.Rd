@@ -4,12 +4,18 @@
 \alias{render_codebook}
 \title{Render Data Codebook}
 \usage{
-render_codebook(data, filename)
+render_codebook(data, filename, output_dir = paste0(getwd(),
+  "assets/data/open_data/intermediate/"), overwrite = FALSE)
 }
 \arguments{
 \item{data}{The dataframe to export and parse}
 
 \item{filename}{The file name (with no extension) to export the codebook & data file as}
+
+\item{output_dir}{The directory to put the file, Default: the "intermediate" directory inside of open_data
+using puddingR structure}
+
+\item{overwrite}{Whether to overwrite the file if it already exists, Default: FALSE}
 }
 \value{
 OUTPUT_DESCRIPTION
@@ -19,6 +25,11 @@ Creates an Rmd file using the parameterized Rmd template "codebook"
 }
 \details{
 DETAILS
+}
+\examples{
+\dontrun{
+render_codebook(mtcars, "cars")
+}
 }
 \seealso{
 \code{\link[rmarkdown]{render}}

@@ -1,11 +1,10 @@
 ---
-title: "skeleton"
-author: "Amber Thomas"
-date: "5/11/2019"
+title: 
+author: 
+date: 
 output: 
   github_document:
     html_preview: true
-    df_print: kable
 params: 
   data: data.csv
   filename: filename
@@ -34,8 +33,11 @@ data <- params$data
 # gather column names in a table
 meta <- tibble::enframe(colnames(data), name = NULL) %>% 
   dplyr::rename("Header" = value) %>% 
-  dplyr::mutate("Description" = "ENTER DESCRIPTION OF THIS COLUMN HERE") %>% 
   dplyr::rowwise() %>% 
+  dplyr::mutate("Description" = case_when(
+    class(data[,Header]) == "factor" ~ paste0("levels: ", paste0(levels(data[,Header]), sep = "", collapse = ", ")),
+    TRUE ~ "ENTER DESCRIPTION OF THIS COLUMN HERE"
+  )) %>% 
   dplyr::mutate("Data Type" = class(data[,Header]))
 ```
 
