@@ -6,8 +6,7 @@
 \usage{
 export_data(data, filename, location = c("processed", "open"),
   directory = "auto", format = "csv", na = "", codebook = FALSE,
-  codebookDir = here::here("assets", "data", "open_data",
-  "intermediate/"))
+  codebookDir = paste0(getwd(), "/assets/data/open_data/intermediate"))
 }
 \arguments{
 \item{data}{Data frame to export}

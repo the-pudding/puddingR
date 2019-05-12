@@ -1,0 +1,4 @@
+name: Automatic Data Readme
+description: >
+ Combination of all individual codebooks into single readme
+create_dir: false

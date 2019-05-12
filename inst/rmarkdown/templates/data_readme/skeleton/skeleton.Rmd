@@ -1,0 +1,34 @@
+---
+title: 
+author: 
+date: 
+output: 
+  github_document:
+    html_preview: false
+params: 
+  directory: paste0(getwd(), "/assets/data/open_data/intermediate/")
+  
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+This folder contains all of the data used in The Pudding essay [My Awesome Essay](https://pudding.cool) published in February 2018.
+
+This file was last updated: `r format(Sys.time(), '%B %d, %Y')`
+
+`r print(params$directory)`
+
+
+```{r echo = FALSE}
+md <- list.files(path = params$directory,
+                   pattern = '*.md', 
+                   recursive = T)
+
+chunks <- paste0("```{r child = '", md, "'}\n```\n")
+ 
+cat(chunks, sep = '\n')
+```
+ 
+

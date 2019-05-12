@@ -34,7 +34,7 @@ export_data <- function(data, filename,
                         format = "csv",
                         na = "",
                         codebook = FALSE,
-                        codebookDir = here::here("assets", "data", "open_data", "intermediate/")){
+                        codebookDir = paste0(getwd(), "/assets/data/open_data/intermediate")){
   # write data to one or multiple locations simultaneously
   purrr::walk(.x = location, .f = function(x){
     export_processed(data, filename, location = x, directory, format, na)

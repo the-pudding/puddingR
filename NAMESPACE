@@ -3,6 +3,7 @@
 export(create_project)
 export(export_data)
 export(export_processed)
+export(knit_data_readme)
 export(puddingTheme)
 export(render_codebook)
 importFrom(desc,desc_set)

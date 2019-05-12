@@ -5,7 +5,7 @@
 \title{Render Data Codebook}
 \usage{
 render_codebook(data, filename, output_dir = paste0(getwd(),
-  "assets/data/open_data/intermediate/"), overwrite = FALSE)
+  "/assets/data/open_data/intermediate/"), overwrite = FALSE)
 }
 \arguments{
 \item{data}{The dataframe to export and parse}

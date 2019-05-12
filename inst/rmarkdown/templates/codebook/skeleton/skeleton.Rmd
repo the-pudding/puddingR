@@ -4,7 +4,7 @@ author:
 date: 
 output: 
   github_document:
-    html_preview: true
+    html_preview: false
 params: 
   data: data.csv
   filename: filename
@@ -44,4 +44,11 @@ meta <- tibble::enframe(colnames(data), name = NULL) %>%
 ```{r echo = FALSE}
 knitr::kable(meta, format = "markdown")
 ```
+
+* *Other Notes*: Include any other relevant notes/calculations/code here.
+
+* *Analysis Session Info*: Including any relevant data processing scripts is great practice (seriously, good job! 🎉), but for anyone who wants to run your script, they need a little more info. At the very least, make sure that you include any of your session info, so things like:
+  * What software you are using (including version number)
+  * What packages are you using (including version number)
+  * anything else that would help someone re-run your analysis given only the information/data provided in this repo.
 

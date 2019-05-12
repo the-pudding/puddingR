@@ -18,7 +18,7 @@
 #' @importFrom rmarkdown render
 render_codebook = function(data,
                            filename,
-                           output_dir = paste0(getwd(), "assets/data/open_data/intermediate/"),
+                           output_dir = paste0(getwd(), "/assets/data/open_data/intermediate/"),
                            overwrite = FALSE) {
   fullPath <- paste0(output_dir, "codebook_", filename, ".md")
 
