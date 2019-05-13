@@ -53,7 +53,7 @@ unlink(file.path(folder, "pudding-analysis"))
 }
 }
 \seealso{
-\code{\link[usethis]{create_package}},\code{\link[usethis]{proj_utils}},\code{\link[usethis]{use_description}}
+\code{\link[usethis]{proj_utils}},\code{\link[usethis]{use_description}}
  \code{\link[rstudioapi]{isAvailable}},\code{\link[rstudioapi]{projects}}
  \code{\link[desc]{desc_set}}
 }

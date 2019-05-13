@@ -3,7 +3,7 @@ title: "Pudding Styled Report"
 author: "Your Name"
 date: "Last updated: `r format(Sys.time(), '%B %d, %Y')`"
 output: 
-  puddingR::puddingTheme
+  puddingR::puddingTheme:
     toc: true
     code_folding: "show"
     number_sections: "false"
