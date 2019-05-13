@@ -12,6 +12,7 @@
 #'
 #' # using other file structure
 #' knit_data_readme(directory = "my_codebooks", output_dir = "public_data")
+#' }
 #' @seealso
 #'  \code{\link[rmarkdown]{render}}
 #' @rdname knit_data_readme

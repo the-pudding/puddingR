@@ -26,7 +26,6 @@
 #'  \code{\link[purrr]{map}}
 #' @rdname export_data
 #' @export
-#' @importFrom here here
 #' @importFrom purrr walk
 export_data <- function(data, filename,
                         location = c("processed", "open"),
