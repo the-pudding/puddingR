@@ -23,7 +23,7 @@ render_codebook = function(data,
 
   fullPath <- dplyr::case_when(
     output_dir == "auto" ~ here::here("assets", "data", "open_data", "intermediate", paste0("codebook_", filename, ".md")),
-    TRUE ~ paste0(outputDir, "codebook_", filename, ".md")
+    TRUE ~ paste0(output_dir, "codebook_", filename, ".md")
   )
 
   if (!overwrite && file.exists(fullPath)){
