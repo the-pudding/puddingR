@@ -35,10 +35,10 @@ meta <- tibble::enframe(colnames(data), name = NULL) %>%
   dplyr::rename("Header" = value) %>% 
   dplyr::rowwise() %>% 
   dplyr::mutate("Description" = case_when(
-    class(data[,Header]) == "factor" ~ paste0("levels: ", paste0(levels(data[,Header]), sep = "", collapse = ", ")),
+    class(data[,Header]) == "factor" ~ paste0("levels: ", paste0(levels(data[[Header]]), sep = "", collapse = ", ")),
     TRUE ~ "ENTER DESCRIPTION OF THIS COLUMN HERE"
   )) %>% 
-  dplyr::mutate("Data Type" = class(data[,Header]))
+  dplyr::mutate("Data Type" = class(data[[Header]]))
 ```
 
 ```{r echo = FALSE}
