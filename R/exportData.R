@@ -9,31 +9,43 @@
 #' @param format file output format (either "csv", "json", or "tsv"), Default: 'csv'
 #' @param na How to export NA values, Default: ''
 #' @param codebook Whether to export a codebook using the render_codebook() function, Default: FALSE
-#' @param codebookDir Where to export the codebook, default assumes using the puddingR file structure, Default: here::here("assets", "data", "open_data", "intermediate/")
+#' @param codebookDir Where to export the codebook, default assumes using the puddingR file structure, Default: "auto"
+#' which outputs to the "open_data/intermediate" folder.
+#' @param scripts Character vector of code chunk names to export to a .R script, Default: NULL
+#' @param scriptFile The .Rmd file to find the code chunks in (requires directory to find file)
+#' @param scriptDir Directory of where to put the resulting .R script. Defaults to the "open_data" directory in
+#' puddingR template, Default: 'auto'
 #' @return OUTPUT_DESCRIPTION
 #' @details DETAILS
 #' @examples
 #' \dontrun{
 #' # assuming use of puddingR file template
-#' export_data(mtcars, "cars", codebook = TRUE)
+#' export_data(mtcars, "cars", codebook = TRUE, scripts = c("load_packages", "analyze_data"),
+#' scriptFile = "analysis.Rmd")
 #'
 #'  # assuming not using puddingR template
 #'  export_data(mtcars, "cars", directory = "data/my_data/",
 #'  codebook = TRUE, codebookDir = "data/codebooks/")
 #' }
-#' @seealso
-#'  \code{\link[here]{here}}
+#'@seealso
 #'  \code{\link[purrr]{map}}
+#'  \code{\link[dplyr]{case_when}}
+#'  \code{\link[here]{here}}
 #' @rdname export_data
 #' @export
 #' @importFrom purrr walk
+#' @importFrom dplyr case_when
+#' @importFrom here here
 export_data <- function(data, filename,
                         location = c("processed", "open"),
                         directory = "auto",
                         format = "csv",
                         na = "",
                         codebook = FALSE,
-                        codebookDir = paste0(getwd(), "/assets/data/open_data/intermediate")){
+                        codebookDir = "auto",
+                        scripts = NULL,
+                        scriptFile,
+                        scriptDir = "auto"){
   # write data to one or multiple locations simultaneously
   purrr::walk(.x = location, .f = function(x){
     export_processed(data, filename, location = x, directory, format, na)
@@ -41,6 +53,18 @@ export_data <- function(data, filename,
 
   if (codebook) {
     render_codebook(data, filename, output_dir = codebookDir)
+  }
+
+  if (!is.null(scripts)){
+    script_dir <- dplyr::case_when(
+      scriptDir == "auto" ~ here::here("assets", "data", "open_data"),
+      TRUE ~ scriptDir
+    )
+
+    export_code(scriptFile,
+                toKeep = scripts,
+                outputFile = filename,
+                outputDir = script_dir)
   }
 }
 

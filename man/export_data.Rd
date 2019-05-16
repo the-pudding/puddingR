@@ -6,7 +6,8 @@
 \usage{
 export_data(data, filename, location = c("processed", "open"),
   directory = "auto", format = "csv", na = "", codebook = FALSE,
-  codebookDir = paste0(getwd(), "/assets/data/open_data/intermediate"))
+  codebookDir = "auto", scripts = NULL, scriptFile,
+  scriptDir = "auto")
 }
 \arguments{
 \item{data}{Data frame to export}
@@ -25,7 +26,15 @@ puddingR structure. Otherwise, the "location" parameter is overwritten by the di
 
 \item{codebook}{Whether to export a codebook using the render_codebook() function, Default: FALSE}
 
-\item{codebookDir}{Where to export the codebook, default assumes using the puddingR file structure, Default: here::here("assets", "data", "open_data", "intermediate/")}
+\item{codebookDir}{Where to export the codebook, default assumes using the puddingR file structure, Default: "auto"
+which outputs to the "open_data/intermediate" folder.}
+
+\item{scripts}{Character vector of code chunk names to export to a .R script, Default: NULL}
+
+\item{scriptFile}{The .Rmd file to find the code chunks in (requires directory to find file)}
+
+\item{scriptDir}{Directory of where to put the resulting .R script. Defaults to the "open_data" directory in
+puddingR template, Default: 'auto'}
 }
 \value{
 OUTPUT_DESCRIPTION
@@ -39,7 +48,8 @@ DETAILS
 \examples{
 \dontrun{
 # assuming use of puddingR file template
-export_data(mtcars, "cars", codebook = TRUE)
+export_data(mtcars, "cars", codebook = TRUE, scripts = c("load_packages", "analyze_data"),
+scriptFile = "analysis.Rmd")
 
  # assuming not using puddingR template
  export_data(mtcars, "cars", directory = "data/my_data/",
@@ -47,6 +57,7 @@ export_data(mtcars, "cars", codebook = TRUE)
 }
 }
 \seealso{
-\code{\link[here]{here}}
- \code{\link[purrr]{map}}
+\code{\link[purrr]{map}}
+ \code{\link[dplyr]{case_when}}
+ \code{\link[here]{here}}
 }
