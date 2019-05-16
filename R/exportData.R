@@ -64,7 +64,7 @@ export_data <- function(data, filename,
     export_code(scriptFile,
                 toKeep = scripts,
                 outputFile = filename,
-                outputDir = script_dir)
+                outputDir = scriptDir)
   }
 }
 
