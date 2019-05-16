@@ -22,7 +22,7 @@
 #' @rdname export_code
 #' @export
 #' @importFrom dplyr case_when
-#' @importFrom knitr purl read_chunk
+#' @importFrom knitr purl read_chunk knit_code
 #' @importFrom purrr walk
 
 export_code <- function(file,
@@ -32,33 +32,36 @@ export_code <- function(file,
 
 
   directory <- dplyr::case_when(
-    outputDir == "auto" ~ paste0(getwd(), "/assets/data/open_data/"),
+    outputDir == "auto" ~ here::here("assets", "data", "open_data"),
     TRUE ~ outputDir
   )
 
   if (!file.exists(directory)) stop(paste0(directory, "doesn't exist. Either use the puddingR file structure or change the directory argument."))
 
-  fullDirectory <- paste0(directory, outputFile, ".R")
-  print(fullDirectory)
+  fullDirectory <- dplyr::case_when(
+    outputDir == "auto" ~ here::here("assets", "data", "open_data", paste0(outputFile, ".R")),
+    TRUE ~ paste0(outputDir, outputFile, ".R")
+  )
+
+  print(paste0("exporting to:", fullDirectory))
 
   allChunks <- knitr::purl(file)
 
+  knitr::read_chunk(allChunks)
 
-  # knitr::read_chunk(allChunks)
-  #
-  # # collect all of the code for all code chunks in a file
-  # chunks <- knitr:::knit_code$get()
-  #
-  # # subset the list of code chunks
-  # toPrint <- chunks[toKeep]
-  #
-  # # for each code chunk that is kept, append it to an R script file
-  # purrr::walk(.x = toPrint, .f = function(x){
-  #   write(x, fullDirectory, append = TRUE)
-  # })
-  #
-  # unlink(allChunks) # delete original purl script
-  #
-  # knitr:::knit_code$restore() # remove chunks from current knitr session
+  # collect all of the code for all code chunks in a file
+  chunks <- knitr::knit_code$get()
+
+  # subset the list of code chunks
+  toPrint <- chunks[toKeep]
+
+  # for each code chunk that is kept, append it to an R script file
+  purrr::walk(.x = toPrint, .f = function(x){
+    write(x, fullDirectory, append = TRUE)
+  })
+
+  unlink(allChunks) # delete original purl script
+
+  knitr::knit_code$restore() # remove chunks from current knitr session
 }
 

@@ -72,6 +72,7 @@ export_data <- function(data, filename,
 #' @rdname export_processed
 #' @export
 #' @importFrom dplyr case_when
+#' @importFrom here here
 
 export_processed <- function(data, filename, location = "open", directory = "auto", format = "csv", na = ""){
   acceptableLocations <- c("open", "processed", "js")
@@ -79,8 +80,8 @@ export_processed <- function(data, filename, location = "open", directory = "aut
       Either upate your directory argument or set the location to open, processed, or js. See ?export_processed for more information")
 
   path <- dplyr::case_when(
-    directory == "auto" & location == "open" ~ paste0(getwd(), "/assets/data/open_data/"),
-    directory == "auto" & location == "processed" ~ paste0(getwd(), "/assets/data/processed_data/"),
+    directory == "auto" & location == "open" ~ here::here("assets", "data", "open_data"),
+    directory == "auto" & location == "processed" ~ here::here("assets", "data", "processed_data"),
     directory == "auto" & location == "js" ~ "../src/assets/data",
     TRUE ~ directory
   )
@@ -107,7 +108,7 @@ export_processed <- function(data, filename, location = "open", directory = "aut
 #' @noRd
 make_csv <- function(data, path, filename, na){
   utils::write.csv(x = data,
-                   file = paste0(path, filename, ".csv"),
+                   file = paste0(path, "/", filename, ".csv"),
                    row.names = FALSE,
                    na = na)
 }
@@ -122,7 +123,7 @@ make_csv <- function(data, path, filename, na){
 #' @noRd
 make_tsv <- function(data, path, filename, na){
   utils::write.table(x = data,
-                   file = paste0(path, filename, ".csv"),
+                   file = paste0(path, "/", filename, ".csv"),
                    row.names = FALSE,
                    na = na,
                    sep = "/t")
@@ -141,6 +142,6 @@ make_tsv <- function(data, path, filename, na){
 make_json <- function(data, path, filename, na){
   json <- jsonlite::toJSON(data)
   readr::write_lines(x = json,
-                     path = paste0(path, filename, ".json"),
+                     path = paste0(path, "/", filename, ".json"),
                      na = na)
 }
