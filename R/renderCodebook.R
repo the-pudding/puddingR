@@ -18,13 +18,22 @@
 #' @importFrom rmarkdown render
 render_codebook = function(data,
                            filename,
-                           output_dir = paste0(getwd(), "/assets/data/open_data/intermediate/"),
+                           output_dir = "auto",
                            overwrite = FALSE) {
-  fullPath <- paste0(output_dir, "codebook_", filename, ".md")
+
+  fullPath <- dplyr::case_when(
+    output_dir == "auto" ~ here::here("assets", "data", "open_data", "intermediate", paste0("codebook_", filename, ".md")),
+    TRUE ~ paste0(outputDir, "codebook_", filename, ".md")
+  )
 
   if (!overwrite && file.exists(fullPath)){
     stop("This file already exists. Either change your filename or switch to overwrite = TRUE and try again")
   }
+
+  directory <- dplyr::case_when(
+    output_dir == "auto" ~ here::here("assets", "data", "open_data", "intermediate"),
+    TRUE ~ output_dir
+  )
 
   template <- system.file("rmarkdown", "templates", "codebook", "skeleton", "skeleton.Rmd", package = "puddingR")
   rmarkdown::render(
@@ -34,6 +43,6 @@ render_codebook = function(data,
       filename = filename
     ),
     output_file = paste0("codebook_", filename, ".md"),
-    output_dir = output_dir
+    output_dir = directory
   )
 }

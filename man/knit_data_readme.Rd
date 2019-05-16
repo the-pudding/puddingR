@@ -4,16 +4,17 @@
 \alias{knit_data_readme}
 \title{Knit Codebooks to Single README}
 \usage{
-knit_data_readme(directory = paste0(getwd(),
-  "/assets/data/open_data/intermediate/"), filename = "README",
-  output_dir = paste0(getwd(), "/assets/data/open_data/"))
+knit_data_readme(input_dir = "auto", filename = "README",
+  output_dir = "auto")
 }
 \arguments{
-\item{directory}{File directory of the existing codebooks, Default: paste0(getwd(), "/assets/data/open_data/intermediate/")}
+\item{input_dir}{File directory of the existing codebooks, Default: "auto", assumes puddingR file directory
+and uses the "intermediate" folder inside "open_data"}
 
 \item{filename}{Name of output file, Default: 'README'}
 
-\item{output_dir}{File directory for final README, Default: paste0(getwd(), "/assets/data/open_data/")}
+\item{output_dir}{File directory for final README, Default: "auto", assumes puddingR file directory, outputs to
+the "open_data" directory}
 }
 \value{
 OUTPUT_DESCRIPTION
