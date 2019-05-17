@@ -1,6 +1,6 @@
 #' @title Use Pudding Theme
 #' @description This is used within the YAML of a new Rmd document to use the Pudding Styled Theme
-#' @param toc Whether to include a table of contents automatically, Default: TRUE
+#' @param toc Whether to include a sticky table of contents automatically, Default: TRUE
 #' @param code_folding Should code be showing or hidden by default (options: "show", "hide"), Default: 'show'
 #' @param number_sections Should each chapter be numbered by default?, Default: FALSE
 #' @return OUTPUT_DESCRIPTION

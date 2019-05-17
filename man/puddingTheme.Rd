@@ -8,7 +8,7 @@ puddingTheme(toc = TRUE, code_folding = "show",
   number_sections = FALSE)
 }
 \arguments{
-\item{toc}{Whether to include a table of contents automatically, Default: TRUE}
+\item{toc}{Whether to include a sticky table of contents automatically, Default: TRUE}
 
 \item{code_folding}{Should code be showing or hidden by default (options: "show", "hide"), Default: 'show'}
 
