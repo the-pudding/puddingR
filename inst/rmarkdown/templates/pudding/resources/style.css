@@ -96,6 +96,14 @@ div.tocify{
   color: var(--gray);
 }
 
+.tocify-item{
+  padding: 0.5rem;
+  border-color: none;
+  border-left: 2px solid var(--bg);
+  background-color: transparent;
+  border-radius: 0px;
+}
+
 .list-group-item{
   padding: 0.5rem;
   border-color: none;
@@ -104,13 +112,14 @@ div.tocify{
   border-radius: 0px;
 }
 
-.list-group-item:active, .list-group-item:hover, .list-group-item.active {
+.list-group-item:active, .list-group-item:hover, .list-group-item.active, .active {
   background-color: transparent;
   border-color: none;
   border-left: 2px solid var(--accent);
   color: var(--gray-dark);
   border-radius: 0px;
 }
+
 
 .logo{
   max-width: 144px;
