@@ -20,13 +20,14 @@ This file was last updated: `r format(Sys.time(), '%B %d, %Y')`
 
 ```{r echo = FALSE}
 directory <- case_when(
-  params$directory == "auto" ~ paste0(getwd(), "/assets/data/open_data/intermediate/"),
+  params$directory == "auto" ~ here::here("assets", "data", "open_data", "intermediate"),
   TRUE ~ params$directory
 )
 
 md <- list.files(path = directory,
                    pattern = '*.md', 
-                   recursive = T)
+                   recursive = TRUE, 
+                   full.names = TRUE)
 ```
 
 
