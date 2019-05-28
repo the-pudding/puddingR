@@ -1,17 +1,119 @@
 ---
-title: "README"
-author: "Amber Thomas"
-date: "5/8/2019"
-output: html_document
+output: github_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, echo = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/"
+)
 ```
 
- [![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+# puddingR
+
+[![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
  
+`puddingR` is designed to streamline R data analysis and open data release for the team at The Pudding. Check out the full `pkgdown`-generated site [here](https://link).
  
+Learn more by searching `vignette("puddingR")` in your R or RStudio console.
  
+## Installation
+
+At the moment, there are no plans for `puddingR` to appear on CRAN. To download:
+
+```{r eval = FALSE}
+# Install development version from GitHub
+devtools::install_github("the-pudding/puddingR")
+
+# Load into your R environment
+library(puddingR)
+```
+
+## Usage
+
+The `puddingR` package currently has a few main features:
+
+### Create a new project & directory system
+
+For our front-end work, the team at The Pudding, uses a [starter template](https://github.com/the-pudding/starter) which sets up anything that could be useful for our work and creates a file directory system. The directory helps the team (and the author) know exactly where to find everything they need for a project. 
+
+The `create_project()` function does the same thing for R projects. It creates a single folder, by default called `analysis`, creates a new R project and several directories. The resulting structure looks like this: 
+
+```{r results="asis", eval = FALSE}
+analysis
+|-- assets
+  |-- data
+    |-- open_data
+    |-- processed_data
+    |-- raw_data
+|-- packrat
+|-- plots
+|-- R
+|-- reports
+|-- rmds
+|-- analysis.Rproj
+```
+
+Many of the remaining functions in this package use default values that assume the above folder structure is present. 
+
+```{r eval = FALSE}
+puddingR::create_project(title = "My Cool Project")
+```
+
+
+### Create a Pudding-themed Rmd Report
+
+While RStudio comes with several themes to use for Rmarkdown reports, I have created one specifically for use with Pudding projects. It contains our logo and lots of tips for how to import and display data. 
+
+To use it, in RStudio, navigate to
+`File` > `New File` > `Rmarkdown`
+
+A window will pop up with a list of options on the left-hand side. Select `From Template` from that list, and navigate to `Pudding Report`. This will launch open a new Rmd file filled with tips that can be deleted if you don't need them. If you're using the above file structure, save this into the `rmds` folder. 
+
+### Outputting Data
+
+Often in our work we need to write data that we have analyzed and save it in another location. In this workflow, most processed data belongs in `assets/data/processed_data/`. The easiest way to get it there is to use `export_processed()`. This function has several arguments, included in them is `location`. If you are using the default file structure from `puddingR`, you can simply use `open` to save it to the `open_data` directory, `processed` to save it to the `processed_data` directory, or, if this `analysis` folder exists in the same working directory as the front-end Pudding starter template, you can use `js` (which will save the file in `src/assets/data/` for use in front-end work).
+
+```{r eval = FALSE}
+# To export mtcars dataset to the processed_data directory
+puddingR::export_processed(mtcars, "cars_data", location = "processed", directory = "auto", format = "csv")
+```
+
+
+### Outputting Data + Metadata
+
+If you want to export codebooks and the scripts used to generate data at the same time the data is generated, you can use `export_data()` instead. 
+
+```{r eval = FALSE}
+# To export mtcars dataset to the open_data directory
+puddingR::export_data(mtcars, "cars_data", 
+                      location = "open", 
+                      directory = "auto", 
+                      format = "csv", 
+                      # Also export a codebook to accompany the data  
+                      codebook = TRUE,
+                      # Export the code chunks from an Rmd file used to generate the data
+                      scripts = c("load_data", "analyze_data", "graph_data"),
+                      scriptFile = here::here("rmds/analysis.Rmd")
+                      )
+```
+
+These pieces can be accomplished separately using `export_processed()`, `render_codebook()` and `export_code()`.
+
+The default directory for a codebook is in `open_data/intermediates`. These files should be opened and manually edited to provide the correct metadata to accompany an open data file. 
+
+Once all of the intermediate codebooks have been edited, they can all be combined into a single file using `knit_data_readme()`.
+
+```{r eval = FALSE}
+puddingR::knit_data_readme()
+```
+
+Find more information on how to use this package in the vignettes or on the `pkgdown` site. 
+ 
+## Code of Conduct
+
 Please note that this project is released with a [Contributor Code of Conduct](CODE_OF_CONDUCT.md).
 By participating in this project you agree to abide by its terms.
