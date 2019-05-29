@@ -1,4 +1,4 @@
-#' @title Render Data Codebook
+#' @title Create a Data Codebook
 #' @description Creates an Rmd file using the parameterized Rmd template "codebook"
 #' @param data The dataframe to export and parse
 #' @param filename The file name (with no extension) to export the codebook & data file as
@@ -9,14 +9,14 @@
 #' @details DETAILS
 #' @examples
 #' \dontrun{
-#' render_codebook(mtcars, "cars")
+#' create_codebook(mtcars, "cars")
 #' }
 #' @seealso
 #'  \code{\link[rmarkdown]{render}}
-#' @rdname render_codebook
+#' @rdname create_codebook
 #' @export
 #' @importFrom rmarkdown render
-render_codebook = function(data,
+create_codebook = function(data,
                            filename,
                            output_dir = "auto",
                            overwrite = FALSE) {

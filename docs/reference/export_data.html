@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Export Data — export_data • puddingR</title>
+<title>Export Processed Data — export_data • puddingR</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="Export Data — export_data" />
+<meta property="og:title" content="Export Processed Data — export_data" />
 
-<meta property="og:description" content="Export any dataframe that has been processed in R with additional options to also produce a codebook" />
+<meta property="og:description" content="Export any dataframe that has been processed in R" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -100,28 +100,26 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Export Data</h1>
+    <h1>Export Processed Data</h1>
     
     <div class="hidden name"><code>export_data.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Export any dataframe that has been processed in R with additional options to also produce a codebook</p>
+    <p>Export any dataframe that has been processed in R</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>export_data</span>(<span class='no'>data</span>, <span class='no'>filename</span>, <span class='kw'>location</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"processed"</span>, <span class='st'>"open"</span>),
-  <span class='kw'>directory</span> <span class='kw'>=</span> <span class='st'>"auto"</span>, <span class='kw'>format</span> <span class='kw'>=</span> <span class='st'>"csv"</span>, <span class='kw'>na</span> <span class='kw'>=</span> <span class='st'>""</span>, <span class='kw'>codebook</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>codebookDir</span> <span class='kw'>=</span> <span class='st'>"auto"</span>, <span class='kw'>scripts</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>scriptFile</span>,
-  <span class='kw'>scriptDir</span> <span class='kw'>=</span> <span class='st'>"auto"</span>)</pre>
+    <pre class="usage"><span class='fu'>export_data</span>(<span class='no'>data</span>, <span class='no'>filename</span>, <span class='kw'>location</span> <span class='kw'>=</span> <span class='st'>"processed"</span>, <span class='kw'>directory</span> <span class='kw'>=</span> <span class='st'>"auto"</span>,
+  <span class='kw'>format</span> <span class='kw'>=</span> <span class='st'>"csv"</span>, <span class='kw'>na</span> <span class='kw'>=</span> <span class='st'>""</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>Data frame to export</p></td>
+      <td><p>data frame to export</p></td>
     </tr>
     <tr>
       <th>filename</th>
@@ -130,7 +128,7 @@
     <tr>
       <th>location</th>
       <td><p>If using the puddingR file directory, automatically place the file inside either the open_data folder ("open")
-the processed_data ("processed"), or outside of the R directory, and in the larger Pudding starter template ("js"), Default: 'open'</p></td>
+the processed_data ("processed"), or outside of the R directory, and in the larger Pudding starter template ("js"), Default: 'processed'</p></td>
     </tr>
     <tr>
       <th>directory</th>
@@ -145,28 +143,6 @@ puddingR structure. Otherwise, the "location" parameter is overwritten by the di
       <th>na</th>
       <td><p>How to export NA values, Default: ''</p></td>
     </tr>
-    <tr>
-      <th>codebook</th>
-      <td><p>Whether to export a codebook using the render_codebook() function, Default: FALSE</p></td>
-    </tr>
-    <tr>
-      <th>codebookDir</th>
-      <td><p>Where to export the codebook, default assumes using the puddingR file structure, Default: "auto"
-which outputs to the "open_data/intermediate" folder.</p></td>
-    </tr>
-    <tr>
-      <th>scripts</th>
-      <td><p>Character vector of code chunk names to export to a .R script, Default: NULL</p></td>
-    </tr>
-    <tr>
-      <th>scriptFile</th>
-      <td><p>The .Rmd file to find the code chunks in (requires directory to find file)</p></td>
-    </tr>
-    <tr>
-      <th>scriptDir</th>
-      <td><p>Directory of where to put the resulting .R script. Defaults to the "open_data" directory in
-puddingR template, Default: 'auto'</p></td>
-    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -179,20 +155,19 @@ puddingR template, Default: 'auto'</p></td>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='https://purrr.tidyverse.org/reference/map.html'>map</a></code>
- <code><a href='https://dplyr.tidyverse.org/reference/case_when.html'>case_when</a></code>
- <code><a href='https://www.rdocumentation.org/packages/here/topics/here'>here</a></code></p></div>
+    <div class='dont-index'><p><code><a href='https://dplyr.tidyverse.org/reference/case_when.html'>case_when</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='co'># assuming use of puddingR file template</span>
-<span class='fu'>export_data</span>(<span class='no'>mtcars</span>, <span class='st'>"cars"</span>, <span class='kw'>codebook</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>scripts</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"load_packages"</span>, <span class='st'>"analyze_data"</span>),
-<span class='kw'>scriptFile</span> <span class='kw'>=</span> <span class='st'>"analysis.Rmd"</span>)
+<span class='co'># export a csv using the puddingR template</span>
+<span class='fu'>export_data</span>(<span class='no'>mtcars</span>, <span class='st'>"cars"</span>)
 
- <span class='co'># assuming not using puddingR template</span>
- <span class='fu'>export_data</span>(<span class='no'>mtcars</span>, <span class='st'>"cars"</span>, <span class='kw'>directory</span> <span class='kw'>=</span> <span class='st'>"data/my_data/"</span>,
- <span class='kw'>codebook</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>codebookDir</span> <span class='kw'>=</span> <span class='st'>"data/codebooks/"</span>)
+<span class='co'># export as json using the puddingR template</span>
+<span class='fu'>export_data</span>(<span class='no'>mtcars</span>, <span class='st'>"cars"</span>, <span class='kw'>format</span> <span class='kw'>=</span> <span class='st'>"json"</span>)
+
+<span class='co'># output csv to a location not using the puddingR template</span>
+<span class='fu'>export_data</span>(<span class='no'>mtcars</span>, <span class='st'>"cars"</span>, <span class='kw'>directory</span> <span class='kw'>=</span> <span class='st'>"data/my_data/"</span>)
 <span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

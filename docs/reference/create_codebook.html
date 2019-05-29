@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Export several code chunks from Rmd to R — export_code • puddingR</title>
+<title>Create a Data Codebook — create_codebook • puddingR</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="Export several code chunks from Rmd to R — export_code" />
+<meta property="og:title" content="Create a Data Codebook — create_codebook" />
 
-<meta property="og:description" content="For use in creating a data repo, indicate all the code chunks used to create a specific subset of data" />
+<meta property="og:description" content="Creates an Rmd file using the parameterized Rmd template &quot;codebook&quot;" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -100,37 +100,38 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Export several code chunks from Rmd to R</h1>
+    <h1>Create a Data Codebook</h1>
     
-    <div class="hidden name"><code>export_code.Rd</code></div>
+    <div class="hidden name"><code>create_codebook.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>For use in creating a data repo, indicate all the code chunks used to create a specific subset of data</p>
+    <p>Creates an Rmd file using the parameterized Rmd template "codebook"</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>export_code</span>(<span class='no'>file</span>, <span class='no'>chunks</span>, <span class='no'>output_file</span>, <span class='kw'>output_dir</span> <span class='kw'>=</span> <span class='st'>"auto"</span>)</pre>
+    <pre class="usage"><span class='fu'>create_codebook</span>(<span class='no'>data</span>, <span class='no'>filename</span>, <span class='kw'>output_dir</span> <span class='kw'>=</span> <span class='st'>"auto"</span>, <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>file</th>
-      <td><p>The .Rmd file to parse</p></td>
+      <th>data</th>
+      <td><p>The dataframe to export and parse</p></td>
     </tr>
     <tr>
-      <th>chunks</th>
-      <td><p>A character vector of the code chunk labels to keep</p></td>
-    </tr>
-    <tr>
-      <th>output_file</th>
-      <td><p>The filename to write to (no extension)</p></td>
+      <th>filename</th>
+      <td><p>The file name (with no extension) to export the codebook &amp; data file as</p></td>
     </tr>
     <tr>
       <th>output_dir</th>
-      <td><p>The directory to write the file to (ending with trailing slash), Default: "auto"</p></td>
+      <td><p>The directory to put the file, Default: the "intermediate" directory inside of open_data
+using puddingR structure</p></td>
+    </tr>
+    <tr>
+      <th>overwrite</th>
+      <td><p>Whether to overwrite the file if it already exists, Default: FALSE</p></td>
     </tr>
     </table>
     
@@ -144,19 +145,12 @@
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='https://dplyr.tidyverse.org/reference/case_when.html'>case_when</a></code>
- <code><a href='https://www.rdocumentation.org/packages/knitr/topics/knit'>knit</a></code>,<code><a href='https://www.rdocumentation.org/packages/knitr/topics/read_chunk'>read_chunk</a></code>
- <code><a href='https://purrr.tidyverse.org/reference/map.html'>map</a></code></p></div>
+    <div class='dont-index'><p><code><a href='https://www.rdocumentation.org/packages/rmarkdown/topics/render'>render</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='co'># In the puddingR default directory</span>
-<span class='fu'>export_code</span>(<span class='st'>"analysis.Rmd"</span>, <span class='kw'>chunks</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"load_data"</span>, <span class='st'>"find_average"</span>), <span class='kw'>output_file</span> <span class='kw'>=</span> <span class='st'>"average"</span>)
-
-<span class='co'>#' # If not in the puddingR default directory</span>
-<span class='fu'>export_code</span>(<span class='st'>"analysis.Rmd"</span>, <span class='kw'>chunks</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"load_data"</span>, <span class='st'>"find_average"</span>),
-<span class='kw'>output_file</span> <span class='kw'>=</span> <span class='st'>"average"</span>, <span class='kw'>output_dir</span> <span class='kw'>=</span> <span class='st'>"myFolder/"</span>)
+<span class='fu'>create_codebook</span>(<span class='no'>mtcars</span>, <span class='st'>"cars"</span>)
 <span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

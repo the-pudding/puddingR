@@ -124,29 +124,29 @@ For more information on the default values and other arguments, try:
 
 When working on analyzing data, you often need to export data for multiple purposes. Sometimes you export processed data so that you don't need to run the preliminary analysis on the raw data every time. Other times, you may need the processed data for use in creating web visualizations. Further still, you may need to export the data for sharing in a public repository.
 
-In the `puddingR` package, there are a few functions to help with these types of tasks. The most basic of which is called `export_processed()`.
+In the `puddingR` package, there are a few functions to help with these types of tasks. The most basic of which is called `export_data()`.
 
 This function works alone to export data in either `csv`, `tsv`, or `json` format to the location you prefer. 
 
 Using the default options, like this:
 ```{r}
 # export your R dataframe called df to filename "analyzed_data"
-puddingR::export_processed(df, filename = "analyzed_data")
+puddingR::export_data(df, filename = "analyzed_data")
 ```
 
-will export a dataframe (in this case called `df`) from your R environment, to a csv file in the `open_data` directory of our default `puddingR` layout.
+will export a dataframe (in this case called `df`) from your R environment, to a csv file in the `processed_data` directory of our default `puddingR` layout.
 
-If, you wanted to export the file instead to the `processed_data` directory, you can indicate that in the `location` argument:
+If, you wanted to export the file instead to the `open_data` directory, you can indicate that in the `location` argument:
 
 ```{r}
-puddingR::export_processed(df, filename = "analyzed_data", location = "processed")
+puddingR::export_data(df, filename = "analyzed_data", location = "open")
 ```
 
 You can also output to two locations at once. For instance, if you want this file to go to the `open_data` directory and also in the `src/assets/data` of the front-end Pudding starter template (assuming this is in the same parent directory as your analysis directory), you can do this:
 
 ```{r}
 # use a character vector to output to multiple locations simultaneously
-puddingR::export_processed(df, filename = "analyzed_data", location = c("open", "js"))
+puddingR::export_data(df, filename = "analyzed_data", location = c("open", "js"))
 ```
 
 If you aren't using the default `puddingR` directory structure, you can specify a custom directory in the `directory` argument:
@@ -154,26 +154,26 @@ If you aren't using the default `puddingR` directory structure, you can specify 
 ```{r}
 # use the directory argument to output to a location outside 
 # the default puddingR directory structure
-puddingR::export_processed(df, filename = "analyzed_data", directory = "myProject/thisOne/")
+puddingR::export_data(df, filename = "analyzed_data", directory = "myProject/thisOne/")
 ```
 
 For more information on the default values and other arguments, try:
 ```{r}
-?puddingR::export_processed
+?puddingR::export_data
 ```
 
-## Export Codebooks
+## Create Data Codebooks
 
 Sharing data openly is great, and something that we strive to do at The Pudding. But making data publicly accessible isn't useful unless it is provided alongside useful metadata. 
 
 Previously, we had created [guidelines](https://github.com/the-pudding/FYI/wiki/Open-Data) of how to include relevant metadata that had to be copy & pasted into separate files and manually filled out for each file that was to be released.
 
-The `puddingR` packages comes with the function `render_codebook()` to help streamline this process.
+The `puddingR` packages comes with the function `create_codebook()` to help streamline this process.
 
 Imagine, you'd like to create a codebook full of metadata for a dataframe in your R environment called `df`. Using the default values like so:
 
 ```{r}
-puddingR::render_codebook(df, filename = "data_codebook")
+puddingR::create_codebook(df, filename = "data_codebook")
 ```
 
 will save a markdown styled file to the `open_data/intermediate` directory of the default `puddingR` file structure. 
@@ -185,7 +185,7 @@ puddingR::render_codebook(df, filename = "data_codebook", output_dir = "myProjec
 
 Also, by default, `overwrite` is set to `FALSE`. This is because rendering the codebook is not the final step. This will create a table containing all of the column names, and the types of data contained in each column, but descriptions of each column, as well as descriptions about the data collection method, source, the contact person etc. must all be filled in **manually**. The codebook generated gives a guide of what kinds of information should be included, but it is up to you to make sure that it is complete.
 
-## Combining Codebooks into a README
+## Combining Codebooks into a Single README
 
 In The Pudding [open data repository](https://github.com/the-pudding/data), the data used for each project is contained in a single folder and all of the codebooks for each file are combined into a single README. Making it easier to find everything at your disposal in the folder. To speed up this process, the `puddingR` package offers `knit_data_readme()` which combines several individual codebooks into a single `README` file. 
 
@@ -225,8 +225,8 @@ or
 Now, if we want to only export those two code chunks into a separate .R script, we can run 
 ```{r}
 puddingR::export_code(file = "analysis.Rmd",
-                      toKeep = c("load_data", "find_average"),
-                      outputFile = "average")
+                      chunks = c("load_data", "find_average"),
+                      output_file = "average")
 ```
 
 This will create `average.R` in the `open_data` directory. It will contain all of the code that was included in the `load_data` and `find_average` code chunks.
@@ -235,16 +235,16 @@ If you want to use a custom directory:
 
 ```{r}
 puddingR::export_code(file = "analysis.Rmd",
-                      toKeep = c("load_data", "find_average"),
-                      outputFile = "average",
-                      outputDir = "myFolder/")
+                      chunks = c("load_data", "find_average"),
+                      output_file = "average",
+                      output_dir = "myFolder/")
 ```
 
 ## Exporting Data, Codebooks, and Code Simultaneously
 
-Now that you know you can export data, a codebook for metadata, and the code used to clean and process data separately, let's look at the `export_data()` function. 
+Now that you know you can export data, a codebook for metadata, and the code used to clean and process data separately, let's look at the `export_all()` function. 
 
-This powerful function combines `export_processed()`, `export_code()`, and `render_codebook()` all in one neat function.
+This powerful function combines `export_data()`, `export_code()`, and `create_codebook()` all in one neat function.
 
 Let's imagine the following situation. You want to:
 
@@ -258,26 +258,26 @@ You are using the `puddingR` standard directory structure and The Pudding front-
 You could do:
 ```{r}
 # export the data
-puddingR::export_processed(df, filename = "analyzed_data", location = c("open", "js"))
+puddingR::export_data(df, filename = "analyzed_data", location = c("open", "js"))
 
 # export the codebook
-puddingR::render_codebook(df, filename = "data_codebook")
+puddingR::create_codebook(df, filename = "data_codebook")
 
 # export the code
 puddingR::export_code(file = "analysis.Rmd",
-                      toKeep = c("load_data", "find_average"),
-                      outputFile = "average")
+                      chunks = c("load_data", "find_average"),
+                      output_file = "average")
 ```
 
-Or, you could use the `export_data()` function instead:
+Or, you could use the `export_all()` function instead:
 
 ```{r}
-puddingR::export_data(df,
+puddingR::export_all(df,
                       filename = "analyzed_data",
                       location = c("open", "js"),
                       codebook = TRUE,
                       scripts = c("load_data", "find_average"),
-                      scriptFile = "analysis.Rmd")
+                      script_file = "analysis.Rmd")
 ```
 
 Which does the exact same thing. 

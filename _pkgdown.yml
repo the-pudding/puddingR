@@ -1,1 +1,15 @@
 destination: docs
+reference:
+- title: Setup Project
+  desc:  Create a new project and Pudding-themed Rmd
+  contents:
+  - create_project
+  - puddingTheme
+- title: Exporting Data, Codebooks, and Scripts
+  desc: Export parts of analysis for other work or sharing
+  contents:
+  - create_codebook
+  - export_all
+  - export_code
+  - export_data
+  - knit_data_readme

@@ -7,9 +7,15 @@
 #' @details DETAILS
 #' @examples
 #' \dontrun{
-#' if(interactive()){
-#'  #EXAMPLE1
-#'  }
+#' # in the YAML of your .Rmd file:
+#' title: "Pudding Styled Report"
+#' author: "Your Name"
+#' date: "today"
+#' output:
+#'   puddingR::puddingTheme:
+#'     toc: true
+#'     code_folding: "show"
+#'     number_sections: "false"
 #' }
 #' @seealso
 #'  \code{\link[rmarkdown]{html_document}}

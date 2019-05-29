@@ -2,20 +2,18 @@
 % Please edit documentation in R/exportData.R
 \name{export_data}
 \alias{export_data}
-\title{Export Data}
+\title{Export Processed Data}
 \usage{
-export_data(data, filename, location = c("processed", "open"),
-  directory = "auto", format = "csv", na = "", codebook = FALSE,
-  codebookDir = "auto", scripts = NULL, scriptFile,
-  scriptDir = "auto")
+export_data(data, filename, location = "processed", directory = "auto",
+  format = "csv", na = "")
 }
 \arguments{
-\item{data}{Data frame to export}
+\item{data}{data frame to export}
 
 \item{filename}{the name of the exported file, without the extension}
 
 \item{location}{If using the puddingR file directory, automatically place the file inside either the open_data folder ("open")
-the processed_data ("processed"), or outside of the R directory, and in the larger Pudding starter template ("js"), Default: 'open'}
+the processed_data ("processed"), or outside of the R directory, and in the larger Pudding starter template ("js"), Default: 'processed'}
 
 \item{directory}{Directory of the exported file. If set to "auto", this assumes that the project follows the
 puddingR structure. Otherwise, the "location" parameter is overwritten by the directory in this argument, Default: 'auto'}
@@ -23,41 +21,28 @@ puddingR structure. Otherwise, the "location" parameter is overwritten by the di
 \item{format}{file output format (either "csv", "json", or "tsv"), Default: 'csv'}
 
 \item{na}{How to export NA values, Default: ''}
-
-\item{codebook}{Whether to export a codebook using the render_codebook() function, Default: FALSE}
-
-\item{codebookDir}{Where to export the codebook, default assumes using the puddingR file structure, Default: "auto"
-which outputs to the "open_data/intermediate" folder.}
-
-\item{scripts}{Character vector of code chunk names to export to a .R script, Default: NULL}
-
-\item{scriptFile}{The .Rmd file to find the code chunks in (requires directory to find file)}
-
-\item{scriptDir}{Directory of where to put the resulting .R script. Defaults to the "open_data" directory in
-puddingR template, Default: 'auto'}
 }
 \value{
 OUTPUT_DESCRIPTION
 }
 \description{
-Export any dataframe that has been processed in R with additional options to also produce a codebook
+Export any dataframe that has been processed in R
 }
 \details{
 DETAILS
 }
 \examples{
 \dontrun{
-# assuming use of puddingR file template
-export_data(mtcars, "cars", codebook = TRUE, scripts = c("load_packages", "analyze_data"),
-scriptFile = "analysis.Rmd")
+# export a csv using the puddingR template
+export_data(mtcars, "cars")
 
- # assuming not using puddingR template
- export_data(mtcars, "cars", directory = "data/my_data/",
- codebook = TRUE, codebookDir = "data/codebooks/")
+# export as json using the puddingR template
+export_data(mtcars, "cars", format = "json")
+
+# output csv to a location not using the puddingR template
+export_data(mtcars, "cars", directory = "data/my_data/")
 }
 }
 \seealso{
-\code{\link[purrr]{map}}
- \code{\link[dplyr]{case_when}}
- \code{\link[here]{here}}
+\code{\link[dplyr]{case_when}}
 }

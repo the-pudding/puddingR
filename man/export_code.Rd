@@ -4,16 +4,16 @@
 \alias{export_code}
 \title{Export several code chunks from Rmd to R}
 \usage{
-export_code(file, toKeep, outputFile, outputDir = "auto")
+export_code(file, chunks, output_file, output_dir = "auto")
 }
 \arguments{
 \item{file}{The .Rmd file to parse}
 
-\item{toKeep}{A character vector of the code chunk labels to keep}
+\item{chunks}{A character vector of the code chunk labels to keep}
 
-\item{outputFile}{The filename to write to (no extension)}
+\item{output_file}{The filename to write to (no extension)}
 
-\item{outputDir}{The directory to write the file to (ending with trailing slash), Default: "auto"}
+\item{output_dir}{The directory to write the file to (ending with trailing slash), Default: "auto"}
 }
 \value{
 OUTPUT_DESCRIPTION
@@ -27,11 +27,11 @@ DETAILS
 \examples{
 \dontrun{
 # In the puddingR default directory
-export_code("analysis.Rmd", toKeep = c("load_data", "find_average"), outputFile = "average")
+export_code("analysis.Rmd", chunks = c("load_data", "find_average"), output_file = "average")
 
 #' # If not in the puddingR default directory
-export_code("analysis.Rmd", toKeep = c("load_data", "find_average"),
-outputFile = "average", outputDir = "myFolder/")
+export_code("analysis.Rmd", chunks = c("load_data", "find_average"),
+output_file = "average", output_dir = "myFolder/")
 }
 }
 \seealso{

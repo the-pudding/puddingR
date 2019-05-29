@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Export several code chunks from Rmd to R — export_code • puddingR</title>
+<title>Export Data, Codebook, and Scripts — export_all • puddingR</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,10 @@
 
 
 
-<meta property="og:title" content="Export several code chunks from Rmd to R — export_code" />
+<meta property="og:title" content="Export Data, Codebook, and Scripts — export_all" />
 
-<meta property="og:description" content="For use in creating a data repo, indicate all the code chunks used to create a specific subset of data" />
+<meta property="og:description" content="Export any dataframe that has been processed in R with additional options to also
+produce a codebook and relevant scripts" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -100,37 +101,73 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Export several code chunks from Rmd to R</h1>
+    <h1>Export Data, Codebook, and Scripts</h1>
     
-    <div class="hidden name"><code>export_code.Rd</code></div>
+    <div class="hidden name"><code>export_all.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>For use in creating a data repo, indicate all the code chunks used to create a specific subset of data</p>
+    <p>Export any dataframe that has been processed in R with additional options to also
+produce a codebook and relevant scripts</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>export_code</span>(<span class='no'>file</span>, <span class='no'>chunks</span>, <span class='no'>output_file</span>, <span class='kw'>output_dir</span> <span class='kw'>=</span> <span class='st'>"auto"</span>)</pre>
+    <pre class="usage"><span class='fu'>export_all</span>(<span class='no'>data</span>, <span class='no'>filename</span>, <span class='kw'>location</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"processed"</span>, <span class='st'>"open"</span>),
+  <span class='kw'>directory</span> <span class='kw'>=</span> <span class='st'>"auto"</span>, <span class='kw'>format</span> <span class='kw'>=</span> <span class='st'>"csv"</span>, <span class='kw'>na</span> <span class='kw'>=</span> <span class='st'>""</span>, <span class='kw'>codebook</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>codebook_dir</span> <span class='kw'>=</span> <span class='st'>"auto"</span>, <span class='kw'>scripts</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>script_file</span>,
+  <span class='kw'>script_dir</span> <span class='kw'>=</span> <span class='st'>"auto"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>file</th>
-      <td><p>The .Rmd file to parse</p></td>
+      <th>data</th>
+      <td><p>Data frame to export</p></td>
     </tr>
     <tr>
-      <th>chunks</th>
-      <td><p>A character vector of the code chunk labels to keep</p></td>
+      <th>filename</th>
+      <td><p>the name of the exported file, without the extension</p></td>
     </tr>
     <tr>
-      <th>output_file</th>
-      <td><p>The filename to write to (no extension)</p></td>
+      <th>location</th>
+      <td><p>If using the puddingR file directory, automatically place the file inside either the open_data folder ("open")
+the processed_data ("processed"), or outside of the R directory, and in the larger Pudding starter template ("js"), Default: 'open'</p></td>
     </tr>
     <tr>
-      <th>output_dir</th>
-      <td><p>The directory to write the file to (ending with trailing slash), Default: "auto"</p></td>
+      <th>directory</th>
+      <td><p>Directory of the exported file. If set to "auto", this assumes that the project follows the
+puddingR structure. Otherwise, the "location" parameter is overwritten by the directory in this argument, Default: 'auto'</p></td>
+    </tr>
+    <tr>
+      <th>format</th>
+      <td><p>file output format (either "csv", "json", or "tsv"), Default: 'csv'</p></td>
+    </tr>
+    <tr>
+      <th>na</th>
+      <td><p>How to export NA values, Default: ''</p></td>
+    </tr>
+    <tr>
+      <th>codebook</th>
+      <td><p>Whether to export a codebook using the render_codebook() function, Default: FALSE</p></td>
+    </tr>
+    <tr>
+      <th>codebook_dir</th>
+      <td><p>Where to export the codebook, default assumes using the puddingR file structure, Default: "auto"
+which outputs to the "open_data/intermediate" folder.</p></td>
+    </tr>
+    <tr>
+      <th>scripts</th>
+      <td><p>Character vector of code chunk names to export to a .R script, Default: NULL</p></td>
+    </tr>
+    <tr>
+      <th>script_file</th>
+      <td><p>The .Rmd file to find the code chunks in (requires directory to find file)</p></td>
+    </tr>
+    <tr>
+      <th>script_dir</th>
+      <td><p>Directory of where to put the resulting .R script. Defaults to the "open_data" directory in
+puddingR template, Default: 'auto'</p></td>
     </tr>
     </table>
     
@@ -144,19 +181,20 @@
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='https://dplyr.tidyverse.org/reference/case_when.html'>case_when</a></code>
- <code><a href='https://www.rdocumentation.org/packages/knitr/topics/knit'>knit</a></code>,<code><a href='https://www.rdocumentation.org/packages/knitr/topics/read_chunk'>read_chunk</a></code>
- <code><a href='https://purrr.tidyverse.org/reference/map.html'>map</a></code></p></div>
+    <div class='dont-index'><p><code><a href='https://purrr.tidyverse.org/reference/map.html'>map</a></code>
+ <code><a href='https://dplyr.tidyverse.org/reference/case_when.html'>case_when</a></code>
+ <code><a href='https://www.rdocumentation.org/packages/here/topics/here'>here</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='co'># In the puddingR default directory</span>
-<span class='fu'>export_code</span>(<span class='st'>"analysis.Rmd"</span>, <span class='kw'>chunks</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"load_data"</span>, <span class='st'>"find_average"</span>), <span class='kw'>output_file</span> <span class='kw'>=</span> <span class='st'>"average"</span>)
+<span class='co'># assuming use of puddingR file template</span>
+<span class='fu'>export_all</span>(<span class='no'>mtcars</span>, <span class='st'>"cars"</span>, <span class='kw'>codebook</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>scripts</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"load_packages"</span>, <span class='st'>"analyze_data"</span>),
+<span class='kw'>script_file</span> <span class='kw'>=</span> <span class='st'>"analysis.Rmd"</span>)
 
-<span class='co'>#' # If not in the puddingR default directory</span>
-<span class='fu'>export_code</span>(<span class='st'>"analysis.Rmd"</span>, <span class='kw'>chunks</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"load_data"</span>, <span class='st'>"find_average"</span>),
-<span class='kw'>output_file</span> <span class='kw'>=</span> <span class='st'>"average"</span>, <span class='kw'>output_dir</span> <span class='kw'>=</span> <span class='st'>"myFolder/"</span>)
+ <span class='co'># assuming not using puddingR template</span>
+ <span class='fu'>export_all</span>(<span class='no'>mtcars</span>, <span class='st'>"cars"</span>, <span class='kw'>directory</span> <span class='kw'>=</span> <span class='st'>"data/my_data/"</span>,
+ <span class='kw'>codebook</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>codebook_dir</span> <span class='kw'>=</span> <span class='st'>"data/codebooks/"</span>)
 <span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

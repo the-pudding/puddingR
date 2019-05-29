@@ -1,5 +1,6 @@
-#' @title Export Data
-#' @description Export any dataframe that has been processed in R with additional options to also produce a codebook
+#' @title Export Data, Codebook, and Scripts
+#' @description Export any dataframe that has been processed in R with additional options to also
+#' produce a codebook and relevant scripts
 #' @param data Data frame to export
 #' @param filename the name of the exported file, without the extension
 #' @param location If using the puddingR file directory, automatically place the file inside either the open_data folder ("open")
@@ -9,62 +10,62 @@
 #' @param format file output format (either "csv", "json", or "tsv"), Default: 'csv'
 #' @param na How to export NA values, Default: ''
 #' @param codebook Whether to export a codebook using the render_codebook() function, Default: FALSE
-#' @param codebookDir Where to export the codebook, default assumes using the puddingR file structure, Default: "auto"
+#' @param codebook_dir Where to export the codebook, default assumes using the puddingR file structure, Default: "auto"
 #' which outputs to the "open_data/intermediate" folder.
 #' @param scripts Character vector of code chunk names to export to a .R script, Default: NULL
-#' @param scriptFile The .Rmd file to find the code chunks in (requires directory to find file)
-#' @param scriptDir Directory of where to put the resulting .R script. Defaults to the "open_data" directory in
+#' @param script_file The .Rmd file to find the code chunks in (requires directory to find file)
+#' @param script_dir Directory of where to put the resulting .R script. Defaults to the "open_data" directory in
 #' puddingR template, Default: 'auto'
 #' @return OUTPUT_DESCRIPTION
 #' @details DETAILS
 #' @examples
 #' \dontrun{
 #' # assuming use of puddingR file template
-#' export_data(mtcars, "cars", codebook = TRUE, scripts = c("load_packages", "analyze_data"),
-#' scriptFile = "analysis.Rmd")
+#' export_all(mtcars, "cars", codebook = TRUE, scripts = c("load_packages", "analyze_data"),
+#' script_file = "analysis.Rmd")
 #'
 #'  # assuming not using puddingR template
-#'  export_data(mtcars, "cars", directory = "data/my_data/",
-#'  codebook = TRUE, codebookDir = "data/codebooks/")
+#'  export_all(mtcars, "cars", directory = "data/my_data/",
+#'  codebook = TRUE, codebook_dir = "data/codebooks/")
 #' }
 #'@seealso
 #'  \code{\link[purrr]{map}}
 #'  \code{\link[dplyr]{case_when}}
 #'  \code{\link[here]{here}}
-#' @rdname export_data
+#' @rdname export_all
 #' @export
 #' @importFrom purrr walk
 #' @importFrom dplyr case_when
 #' @importFrom here here
-export_data <- function(data, filename,
+export_all <- function(data, filename,
                         location = c("processed", "open"),
                         directory = "auto",
                         format = "csv",
                         na = "",
                         codebook = FALSE,
-                        codebookDir = "auto",
+                        codebook_dir = "auto",
                         scripts = NULL,
-                        scriptFile,
-                        scriptDir = "auto"){
+                        script_file,
+                        script_dir = "auto"){
   # write data to one or multiple locations simultaneously
   purrr::walk(.x = location, .f = function(x){
-    export_processed(data, filename, location = x, directory, format, na)
+    export_data(data, filename, location = x, directory, format, na)
   })
 
   if (codebook) {
-    render_codebook(data, filename, output_dir = codebookDir)
+    create_codebook(data, filename, output_dir = codebook_dir)
   }
 
   if (!is.null(scripts)){
-    script_dir <- dplyr::case_when(
-      scriptDir == "auto" ~ here::here("assets", "data", "open_data"),
-      TRUE ~ scriptDir
+    scriptDir <- dplyr::case_when(
+      script_dir == "auto" ~ here::here("assets", "data", "open_data"),
+      TRUE ~ script_dir
     )
 
-    export_code(scriptFile,
-                toKeep = scripts,
-                outputFile = filename,
-                outputDir = scriptDir)
+    export_code(script_file,
+                chunks = scripts,
+                output_file = filename,
+                output_dir = script_dir)
   }
 }
 
@@ -73,7 +74,7 @@ export_data <- function(data, filename,
 #' @param data data frame to export
 #' @param filename the name of the exported file, without the extension
 #' @param location If using the puddingR file directory, automatically place the file inside either the open_data folder ("open")
-#' the processed_data ("processed"), or outside of the R directory, and in the larger Pudding starter template ("js"), Default: 'open'
+#' the processed_data ("processed"), or outside of the R directory, and in the larger Pudding starter template ("js"), Default: 'processed'
 #' @param directory Directory of the exported file. If set to "auto", this assumes that the project follows the
 #' puddingR structure. Otherwise, the "location" parameter is overwritten by the directory in this argument, Default: 'auto'
 #' @param format file output format (either "csv", "json", or "tsv"), Default: 'csv'
@@ -83,22 +84,22 @@ export_data <- function(data, filename,
 #' @examples
 #' \dontrun{
 #' # export a csv using the puddingR template
-#' export_processed(mtcars, "cars")
+#' export_data(mtcars, "cars")
 #'
 #' # export as json using the puddingR template
-#' export_processed(mtcars, "cars", format = "json")
+#' export_data(mtcars, "cars", format = "json")
 #'
 #' # output csv to a location not using the puddingR template
-#' export_processed(mtcars, "cars", directory = "data/my_data/")
+#' export_data(mtcars, "cars", directory = "data/my_data/")
 #' }
 #' @seealso
 #'  \code{\link[dplyr]{case_when}}
-#' @rdname export_processed
+#' @rdname export_data
 #' @export
 #' @importFrom dplyr case_when
 #' @importFrom here here
 
-export_processed <- function(data, filename, location = "open", directory = "auto", format = "csv", na = ""){
+export_data <- function(data, filename, location = "processed", directory = "auto", format = "csv", na = ""){
   acceptableLocations <- c("open", "processed", "js")
   if (directory == "auto" & !location %in% acceptableLocations) stop("The location you selected isn't one of the automatic options.
       Either upate your directory argument or set the location to open, processed, or js. See ?export_processed for more information")

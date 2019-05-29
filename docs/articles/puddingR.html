@@ -74,10 +74,202 @@
 
     
     
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(puddingR)</a></code></pre></div>
+<p>When writing stories for <a href="https://pudding.cool">The Pudding</a>, our team goes through many steps. We start by asking a question about the world that we want to investigate. Then find data to help us answer that question. Next, that data often needs to be analyzed, tidied, and exported for making interactive graphics on the web.</p>
+<p>The <code>puddingR</code> package exists to help streamline the analysis and data export process.</p>
+<p>This document should help introduce you to <code>puddingR</code>’s tools, and show you how to use them in Pudding (and other) projects.</p>
+<div id="installation" class="section level2">
+<h2 class="hasAnchor">
+<a href="#installation" class="anchor"></a>Installation</h2>
+<p>If you’re reading this document, you’ve probably already installed the package. But in case you haven’t, install the latest from GitHub and then load it into your R environment.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># install the latest</span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"the-pudding/puddingR"</span>)</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="co"># load into your R environment</span></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(puddingR)</a></code></pre></div>
+</div>
+<div id="set-up-the-template-directory" class="section level2">
+<h2 class="hasAnchor">
+<a href="#set-up-the-template-directory" class="anchor"></a>Set Up The Template Directory</h2>
+<p>Like The Pudding’s front-end <a href="https://github.com/the-pudding/starter">starter template</a>, <code>puddingR</code> assists in setting up a file directory for analysis. Using the same structure helps others to know where files are when looking for them, and helps to keep things organized.</p>
+<p>To set up the template directory, open RStudio (download the latest <a href="https://www.rstudio.com/products/rstudio/download/">here</a>).</p>
+<p>To create a new project, make a new directory (either using point and click or the command line <code>mkdir project-name</code>) and set that as your working directory.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/getwd">setwd</a></span>(<span class="st">"Desktop/myProject"</span>)</a></code></pre></div>
+<p><em>No need to worry about the dangers of setting a working directory on your local machine, we’re about to overwrite it and use the <code>here</code> package to manage all absolute and relative references from here on out.</em></p>
+<p>Inside your project directory, we now want to create the analysis starter template. <code><a href="../reference/createProject.html">create_project()</a></code> exists specifically for this purpose.</p>
+<p>By default, it creates the following file structure:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">analysis</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="op">|--</span><span class="st"> </span>assets</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">  <span class="op">|--</span><span class="st"> </span>data</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">    <span class="op">|--</span><span class="st"> </span>open_data</a>
+<a class="sourceLine" id="cb3-5" data-line-number="5">    <span class="op">|--</span><span class="st"> </span>processed_data</a>
+<a class="sourceLine" id="cb3-6" data-line-number="6">    <span class="op">|--</span><span class="st"> </span>raw_data</a>
+<a class="sourceLine" id="cb3-7" data-line-number="7"><span class="op">|--</span><span class="st"> </span>packrat</a>
+<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="op">|--</span><span class="st"> </span>plots</a>
+<a class="sourceLine" id="cb3-9" data-line-number="9"><span class="op">|--</span><span class="st"> </span>R</a>
+<a class="sourceLine" id="cb3-10" data-line-number="10"><span class="op">|--</span><span class="st"> </span>reports</a>
+<a class="sourceLine" id="cb3-11" data-line-number="11"><span class="op">|--</span><span class="st"> </span>rmds</a>
+<a class="sourceLine" id="cb3-12" data-line-number="12"><span class="op">|--</span><span class="st"> </span>analysis.Rproj</a></code></pre></div>
+<p>The intention of the directories is as follows:</p>
+<ul>
+<li>
+<strong>assets</strong>: much like the assets folder in our front-end starter template, anything we may need for our project can go in here</li>
+<li>
+<strong>assets/data/raw_data</strong>: Data you have just received/downloaded etc. <em>prior</em> to cleaning/analyzing</li>
+<li>
+<strong>assets/data/processed_data</strong>: Data that you have cleaned/processed in some way</li>
+<li>
+<strong>assets/data/open_data</strong>: Data that’s ready to go into our <a href="https://github.com/the-pudding/data">open data repo</a>, alongside codebooks to describe the data, and scripts used to go from raw data to released data</li>
+<li>
+<strong>packrat</strong>: No need to manually touch anything in this directory, but it automatically stores packages you use in your project</li>
+<li>
+<strong>plots</strong>: Any plots you exported. This is useful if you’re exporting SVG figures to clean up in Figma.</li>
+<li>
+<strong>R</strong>: Sometimes it’s nice to separate R functions that you use often in your analysis into a separate R script. Those go in here.</li>
+<li>
+<strong>rmds</strong>: Any Rmarkdown documents that you generate during your analysis</li>
+<li>
+<strong>reports</strong>: When you <code>knit</code> an Rmd document that is the default Pudding template, you will receive an HTML document in return. These HTML reports should go in the reports folder.</li>
+<li>
+<strong>analysis.Rproj</strong>: The <a href="https://support.rstudio.com/hc/en-us/articles/200526207-Using-Projects">R project file</a> that helps keep your project contained to this directory.</li>
+</ul>
+<p>If you’re ok with the file structure as indicated above, we can run:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="../reference/createProject.html">create_project</a></span>()</a></code></pre></div>
+<p>The default values for everything will create the directory structure as shown above, with an Rmarkdown file (in the <code>rmds</code> folder) to get you started.</p>
+<p>It also sets up <code>packrat</code> as a package <a href="https://rstudio.github.io/packrat/">dependency management system</a>. This allows each of your projects to run with their own versions of packages, and allows you to ensure that the correct versions of packages are retained when you share your project.</p>
+<p>All of the above features can be altered via argument options in the <code><a href="../reference/createProject.html">create_project()</a></code> function.</p>
+<p>If, for instance, you want the parent directory to be called “R-analysis”, we can change the <code>name</code> argument:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="../reference/createProject.html">create_project</a></span>(<span class="dt">name =</span> <span class="st">"R-analysis"</span>)</a></code></pre></div>
+<p>If you’d like to create a custom file structure, perhaps something like this:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">analysis</a>
+<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="op">|--</span><span class="st"> </span>data</a>
+<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="op">|--</span><span class="st"> </span>packrat</a>
+<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="op">|--</span><span class="st"> </span>R</a>
+<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="op">|--</span><span class="st"> </span>rmds</a>
+<a class="sourceLine" id="cb6-6" data-line-number="6"><span class="op">|--</span><span class="st"> </span>analysis.Rproj</a></code></pre></div>
+<p>We can indicate that via the <code>dirs</code> argument:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw"><a href="../reference/createProject.html">create_project</a></span>(<span class="dt">dirs =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"data"</span>, <span class="st">"R"</span>, <span class="st">"rmds"</span>))</a></code></pre></div>
+<p><em>Note that you don’t need to add the .Rproj file as that is generated automatically, or the <code>packrat</code> file as that is generated automatically as long as <code>packagedeps</code> is set to <code>"packrat"</code> (the default value).</em></p>
+<p>For more information on the default values and other arguments, try:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">?puddingR<span class="op">::</span>create_project</a></code></pre></div>
+</div>
+<div id="export-processed-data" class="section level2">
+<h2 class="hasAnchor">
+<a href="#export-processed-data" class="anchor"></a>Export Processed Data</h2>
+<p>When working on analyzing data, you often need to export data for multiple purposes. Sometimes you export processed data so that you don’t need to run the preliminary analysis on the raw data every time. Other times, you may need the processed data for use in creating web visualizations. Further still, you may need to export the data for sharing in a public repository.</p>
+<p>In the <code>puddingR</code> package, there are a few functions to help with these types of tasks. The most basic of which is called <code><a href="../reference/export_data.html">export_data()</a></code>.</p>
+<p>This function works alone to export data in either <code>csv</code>, <code>tsv</code>, or <code>json</code> format to the location you prefer.</p>
+<p>Using the default options, like this:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="co"># export your R dataframe called df to filename "analyzed_data"</span></a>
+<a class="sourceLine" id="cb9-2" data-line-number="2">puddingR<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/puddingR/topics/export_data">export_data</a></span>(df, <span class="dt">filename =</span> <span class="st">"analyzed_data"</span>)</a></code></pre></div>
+<p>will export a dataframe (in this case called <code>df</code>) from your R environment, to a csv file in the <code>processed_data</code> directory of our default <code>puddingR</code> layout.</p>
+<p>If, you wanted to export the file instead to the <code>open_data</code> directory, you can indicate that in the <code>location</code> argument:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">puddingR<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/puddingR/topics/export_data">export_data</a></span>(df, <span class="dt">filename =</span> <span class="st">"analyzed_data"</span>, <span class="dt">location =</span> <span class="st">"open"</span>)</a></code></pre></div>
+<p>You can also output to two locations at once. For instance, if you want this file to go to the <code>open_data</code> directory and also in the <code>src/assets/data</code> of the front-end Pudding starter template (assuming this is in the same parent directory as your analysis directory), you can do this:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="co"># use a character vector to output to multiple locations simultaneously</span></a>
+<a class="sourceLine" id="cb11-2" data-line-number="2">puddingR<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/puddingR/topics/export_data">export_data</a></span>(df, <span class="dt">filename =</span> <span class="st">"analyzed_data"</span>, <span class="dt">location =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"open"</span>, <span class="st">"js"</span>))</a></code></pre></div>
+<p>If you aren’t using the default <code>puddingR</code> directory structure, you can specify a custom directory in the <code>directory</code> argument:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="co"># use the directory argument to output to a location outside </span></a>
+<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="co"># the default puddingR directory structure</span></a>
+<a class="sourceLine" id="cb12-3" data-line-number="3">puddingR<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/puddingR/topics/export_data">export_data</a></span>(df, <span class="dt">filename =</span> <span class="st">"analyzed_data"</span>, <span class="dt">directory =</span> <span class="st">"myProject/thisOne/"</span>)</a></code></pre></div>
+<p>For more information on the default values and other arguments, try:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1">?puddingR<span class="op">::</span>export_data</a></code></pre></div>
+</div>
+<div id="create-data-codebooks" class="section level2">
+<h2 class="hasAnchor">
+<a href="#create-data-codebooks" class="anchor"></a>Create Data Codebooks</h2>
+<p>Sharing data openly is great, and something that we strive to do at The Pudding. But making data publicly accessible isn’t useful unless it is provided alongside useful metadata.</p>
+<p>Previously, we had created <a href="https://github.com/the-pudding/FYI/wiki/Open-Data">guidelines</a> of how to include relevant metadata that had to be copy &amp; pasted into separate files and manually filled out for each file that was to be released.</p>
+<p>The <code>puddingR</code> packages comes with the function <code><a href="../reference/create_codebook.html">create_codebook()</a></code> to help streamline this process.</p>
+<p>Imagine, you’d like to create a codebook full of metadata for a dataframe in your R environment called <code>df</code>. Using the default values like so:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">puddingR<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/puddingR/topics/create_codebook">create_codebook</a></span>(df, <span class="dt">filename =</span> <span class="st">"data_codebook"</span>)</a></code></pre></div>
+<p>will save a markdown styled file to the <code>open_data/intermediate</code> directory of the default <code>puddingR</code> file structure.</p>
+<p>Any directory can be specified by changing the <code>output_dir</code> argument:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">puddingR<span class="op">::</span><span class="kw">render_codebook</span>(df, <span class="dt">filename =</span> <span class="st">"data_codebook"</span>, <span class="dt">output_dir =</span> <span class="st">"myProject/thisOne/"</span>)</a></code></pre></div>
+<p>Also, by default, <code>overwrite</code> is set to <code>FALSE</code>. This is because rendering the codebook is not the final step. This will create a table containing all of the column names, and the types of data contained in each column, but descriptions of each column, as well as descriptions about the data collection method, source, the contact person etc. must all be filled in <strong>manually</strong>. The codebook generated gives a guide of what kinds of information should be included, but it is up to you to make sure that it is complete.</p>
+</div>
+<div id="combining-codebooks-into-a-single-readme" class="section level2">
+<h2 class="hasAnchor">
+<a href="#combining-codebooks-into-a-single-readme" class="anchor"></a>Combining Codebooks into a Single README</h2>
+<p>In The Pudding <a href="https://github.com/the-pudding/data">open data repository</a>, the data used for each project is contained in a single folder and all of the codebooks for each file are combined into a single README. Making it easier to find everything at your disposal in the folder. To speed up this process, the <code>puddingR</code> package offers <code><a href="../reference/knit_data_readme.html">knit_data_readme()</a></code> which combines several individual codebooks into a single <code>README</code> file.</p>
+<p>If you are using the <code>puddingR</code> file structure, you can run the function with no specified arguments:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1">puddingR<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/puddingR/topics/knit_data_readme">knit_data_readme</a></span>()</a></code></pre></div>
+<p>This will create a <code>README.md</code> file inside of <code>open_data</code> combining all of the .md files that it finds in the <code>open_data/intermediate/</code> directory. Then, everything inside <code>open_data</code> except for the <code>intermediate/</code> directory can be uploaded to the <a href="https://github.com/the-pudding/data">open data repository</a>.</p>
+<p>If you aren’t using the <code>puddingR</code> directory system, you can specify the directory where all of your codebooks are stored, as well as where the <code>README</code> file should be generated.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">puddingR<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/puddingR/topics/knit_data_readme">knit_data_readme</a></span>(<span class="dt">directory =</span> <span class="st">"my_codebooks"</span>, <span class="dt">output_dir =</span> <span class="st">"public_data"</span>)</a></code></pre></div>
+<blockquote>
+<p><strong>Important</strong>: You should <strong>not</strong> manually change anything in the <code>README.md</code> file. All manual specifications of data should be made in the corresponding codebooks. Then, <code><a href="../reference/knit_data_readme.html">knit_data_readme()</a></code> can be run repeatedly to incorporate any updated codebooks. Otherwise, you may accidentally overwrite your file.</p>
+</blockquote>
+</div>
+<div id="export-code-chunks" class="section level2">
+<h2 class="hasAnchor">
+<a href="#export-code-chunks" class="anchor"></a>Export Code Chunks</h2>
+<p>While sharing data and metadata is excellent practice, it’s even better if you can also share the code you used to go from raw data to processed data. If you’ve been analyzing your data in an .Rmd file, the <code>puddingR</code> package can make this process easier.</p>
+<p>In the past, my workflow for sharing code was to manually go through my .Rmd file, copying the relevant code chunks from .Rmd into a separate .R script that served only one purpose: converting the raw data into the shared, processed data. Now, using the <code><a href="../reference/export_code.html">export_code()</a></code> function, we can do this all at once.</p>
+<p>Let’s assume that all of your analysis work exists in <code>analysis.Rmd</code>. Inside of that file you have 50 code chunks, but you only need a few to display this particular bit of data cleaning. You need to ensure that <em>your code chunks are named</em>. So, instead of your code chunk starting like this:</p>
+<p>```{r}</p>
+<p>Give each code chunk a <strong>unique</strong> name like this:</p>
+<p>```{r load_data}</p>
+<p>or ```{r find_average}</p>
+<p>Now, if we want to only export those two code chunks into a separate .R script, we can run</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1">puddingR<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/puddingR/topics/export_code">export_code</a></span>(<span class="dt">file =</span> <span class="st">"analysis.Rmd"</span>,</a>
+<a class="sourceLine" id="cb18-2" data-line-number="2">                      <span class="dt">chunks =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"load_data"</span>, <span class="st">"find_average"</span>),</a>
+<a class="sourceLine" id="cb18-3" data-line-number="3">                      <span class="dt">output_file =</span> <span class="st">"average"</span>)</a></code></pre></div>
+<p>This will create <code>average.R</code> in the <code>open_data</code> directory. It will contain all of the code that was included in the <code>load_data</code> and <code>find_average</code> code chunks.</p>
+<p>If you want to use a custom directory:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1">puddingR<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/puddingR/topics/export_code">export_code</a></span>(<span class="dt">file =</span> <span class="st">"analysis.Rmd"</span>,</a>
+<a class="sourceLine" id="cb19-2" data-line-number="2">                      <span class="dt">chunks =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"load_data"</span>, <span class="st">"find_average"</span>),</a>
+<a class="sourceLine" id="cb19-3" data-line-number="3">                      <span class="dt">output_file =</span> <span class="st">"average"</span>,</a>
+<a class="sourceLine" id="cb19-4" data-line-number="4">                      <span class="dt">output_dir =</span> <span class="st">"myFolder/"</span>)</a></code></pre></div>
+</div>
+<div id="exporting-data-codebooks-and-code-simultaneously" class="section level2">
+<h2 class="hasAnchor">
+<a href="#exporting-data-codebooks-and-code-simultaneously" class="anchor"></a>Exporting Data, Codebooks, and Code Simultaneously</h2>
+<p>Now that you know you can export data, a codebook for metadata, and the code used to clean and process data separately, let’s look at the <code><a href="../reference/export_all.html">export_all()</a></code> function.</p>
+<p>This powerful function combines <code><a href="../reference/export_data.html">export_data()</a></code>, <code><a href="../reference/export_code.html">export_code()</a></code>, and <code><a href="../reference/create_codebook.html">create_codebook()</a></code> all in one neat function.</p>
+<p>Let’s imagine the following situation. You want to:</p>
+<ul>
+<li>Export a dataframe in your R environment called <code>df</code>.</li>
+<li>Make the data available for open data sharing and to be exported to the standard front-end Pudding Starter Template.</li>
+<li>Export a codebook with the data</li>
+<li>Export the code used to generate the data</li>
+</ul>
+<p>You are using the <code>puddingR</code> standard directory structure and The Pudding front-end starter template.</p>
+<p>You could do:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1"><span class="co"># export the data</span></a>
+<a class="sourceLine" id="cb20-2" data-line-number="2">puddingR<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/puddingR/topics/export_data">export_data</a></span>(df, <span class="dt">filename =</span> <span class="st">"analyzed_data"</span>, <span class="dt">location =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"open"</span>, <span class="st">"js"</span>))</a>
+<a class="sourceLine" id="cb20-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb20-4" data-line-number="4"><span class="co"># export the codebook</span></a>
+<a class="sourceLine" id="cb20-5" data-line-number="5">puddingR<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/puddingR/topics/create_codebook">create_codebook</a></span>(df, <span class="dt">filename =</span> <span class="st">"data_codebook"</span>)</a>
+<a class="sourceLine" id="cb20-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb20-7" data-line-number="7"><span class="co"># export the code</span></a>
+<a class="sourceLine" id="cb20-8" data-line-number="8">puddingR<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/puddingR/topics/export_code">export_code</a></span>(<span class="dt">file =</span> <span class="st">"analysis.Rmd"</span>,</a>
+<a class="sourceLine" id="cb20-9" data-line-number="9">                      <span class="dt">chunks =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"load_data"</span>, <span class="st">"find_average"</span>),</a>
+<a class="sourceLine" id="cb20-10" data-line-number="10">                      <span class="dt">output_file =</span> <span class="st">"average"</span>)</a></code></pre></div>
+<p>Or, you could use the <code><a href="../reference/export_all.html">export_all()</a></code> function instead:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1">puddingR<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/puddingR/topics/export_all">export_all</a></span>(df,</a>
+<a class="sourceLine" id="cb21-2" data-line-number="2">                      <span class="dt">filename =</span> <span class="st">"analyzed_data"</span>,</a>
+<a class="sourceLine" id="cb21-3" data-line-number="3">                      <span class="dt">location =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"open"</span>, <span class="st">"js"</span>),</a>
+<a class="sourceLine" id="cb21-4" data-line-number="4">                      <span class="dt">codebook =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb21-5" data-line-number="5">                      <span class="dt">scripts =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"load_data"</span>, <span class="st">"find_average"</span>),</a>
+<a class="sourceLine" id="cb21-6" data-line-number="6">                      <span class="dt">script_file =</span> <span class="st">"analysis.Rmd"</span>)</a></code></pre></div>
+<p>Which does the exact same thing.</p>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+        <div id="tocnav">
+      <h2 class="hasAnchor">
+<a href="#tocnav" class="anchor"></a>Contents</h2>
+      <ul class="nav nav-pills nav-stacked">
+<li><a href="#installation">Installation</a></li>
+      <li><a href="#set-up-the-template-directory">Set Up The Template Directory</a></li>
+      <li><a href="#export-processed-data">Export Processed Data</a></li>
+      <li><a href="#create-data-codebooks">Create Data Codebooks</a></li>
+      <li><a href="#combining-codebooks-into-a-single-readme">Combining Codebooks into a Single README</a></li>
+      <li><a href="#export-code-chunks">Export Code Chunks</a></li>
+      <li><a href="#exporting-data-codebooks-and-code-simultaneously">Exporting Data, Codebooks, and Code Simultaneously</a></li>
+      </ul>
+</div>
       </div>
 
 </div>
