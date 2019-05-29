@@ -1,7 +1,7 @@
 #' @title Create New Pudding Project
 #' @description Creates a new R project and generates the folders needed for consistent Pudding analysis
 #' @param name File name for the project. Default: "analysis"
-#' @param title What the project does, one line, title case, Default: NULL
+#' @param title What the project does, one line, title case, Default: "My Analysis"
 #' @param folder Folder under which to create the new project, Default: getwd()
 #' @param dirs Character vector of new directories to create, Default: c("assets", "functions", "open_data", "plots", "processed_data", #' "raw_data", "reports", "rmds", "rscripts")
 #' @param packagedeps Set which tool you would like to use for package reproducibility, Default: 'packrat'
@@ -34,7 +34,7 @@
 #' @importFrom rstudioapi isAvailable openProject
 #' @importFrom desc desc_set
 #' @importFrom rmarkdown draft
-create_project <- function(name = "analysis", title = NULL,
+create_project <- function(name = "analysis", title = "My analysis",
                           folder = getwd(),
                           dirs = c("assets", "assets/data", "assets/data/open_data", "plots", "assets/data/processed_data", "assets/data/raw_data", "reports", "rmds"),
                           packagedeps = "packrat",
