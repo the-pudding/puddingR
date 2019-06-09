@@ -7,7 +7,8 @@
 
 `puddingR` is designed to streamline R data analysis and open data
 release for the team at The Pudding. Check out the full
-`pkgdown`-generated site [here](https://link).
+`pkgdown`-generated site
+[here](https://the-pudding.github.io/puddingR/).
 
 Learn more by searching `vignette("puddingR")` in your R or RStudio
 console.
@@ -83,8 +84,8 @@ structure, save this into the `rmds` folder.
 Often in our work we need to write data that we have analyzed and save
 it in another location. In this workflow, most processed data belongs in
 `assets/data/processed_data/`. The easiest way to get it there is to use
-`export_processed()`. This function has several arguments, included in
-them is `location`. If you are using the default file structure from
+`export_data()`. This function has several arguments, included in them
+is `location`. If you are using the default file structure from
 `puddingR`, you can simply use `open` to save it to the `open_data`
 directory, `processed` to save it to the `processed_data` directory, or,
 if this `analysis` folder exists in the same working directory as the
@@ -93,18 +94,17 @@ the file in `src/assets/data/` for use in front-end work).
 
 ``` r
 # To export mtcars dataset to the processed_data directory
-puddingR::export_processed(mtcars, "cars_data", location = "processed", directory = "auto", format = "csv")
+puddingR::export_data(mtcars, "cars_data", location = "processed", directory = "auto", format = "csv")
 ```
 
 ### Outputting Data + Metadata
 
 If you want to export codebooks and the scripts used to generate data at
-the same time the data is generated, you can use `export_data()`
-instead.
+the same time the data is generated, you can use `export_all()` instead.
 
 ``` r
 # To export mtcars dataset to the open_data directory
-puddingR::export_data(mtcars, "cars_data", 
+puddingR::export_all(mtcars, "cars_data", 
                       location = "open", 
                       directory = "auto", 
                       format = "csv", 
@@ -116,8 +116,8 @@ puddingR::export_data(mtcars, "cars_data",
                       )
 ```
 
-These pieces can be accomplished separately using `export_processed()`,
-`render_codebook()` and `export_code()`.
+These pieces can be accomplished separately using `export_data()`,
+`create_codebook()` and `export_code()`.
 
 The default directory for a codebook is in `open_data/intermediates`.
 These files should be opened and manually edited to provide the correct

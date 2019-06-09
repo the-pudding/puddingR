@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 
 [![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
  
-`puddingR` is designed to streamline R data analysis and open data release for the team at The Pudding. Check out the full `pkgdown`-generated site [here](https://link).
+`puddingR` is designed to streamline R data analysis and open data release for the team at The Pudding. Check out the full `pkgdown`-generated site [here](https://the-pudding.github.io/puddingR/).
  
 Learn more by searching `vignette("puddingR")` in your R or RStudio console.
  
