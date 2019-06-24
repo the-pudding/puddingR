@@ -4,16 +4,17 @@
 \alias{create_project}
 \title{Create New Pudding Project}
 \usage{
-create_project(name = "analysis", title = NULL, folder = getwd(),
-  dirs = c("assets", "assets/data", "assets/data/open_data", "plots",
-  "assets/data/processed_data", "assets/data/raw_data", "reports", "rmds"),
-  packagedeps = "packrat", reset = FALSE, open = FALSE,
-  defaultRmd = TRUE, brand = "pudding")
+create_project(name = "analysis", title = "My analysis",
+  folder = getwd(), dirs = c("assets", "assets/data",
+  "assets/data/open_data", "plots", "assets/data/processed_data",
+  "assets/data/raw_data", "reports", "rmds"), packagedeps = "packrat",
+  reset = FALSE, open = FALSE, defaultRmd = TRUE,
+  brand = "pudding")
 }
 \arguments{
 \item{name}{File name for the project. Default: "analysis"}
 
-\item{title}{What the project does, one line, title case, Default: NULL}
+\item{title}{What the project does, one line, title case, Default: "My Analysis"}
 
 \item{folder}{Folder under which to create the new project, Default: getwd()}
 

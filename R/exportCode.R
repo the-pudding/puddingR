@@ -50,10 +50,10 @@ export_code <- function(file,
   knitr::read_chunk(allChunks)
 
   # collect all of the code for all code chunks in a file
-  chunks <- knitr::knit_code$get()
+  chunk_list <- knitr::knit_code$get()
 
   # subset the list of code chunks
-  toPrint <- chunks[chunks]
+  toPrint <- chunk_list[chunks]
 
   # for each code chunk that is kept, append it to an R script file
   purrr::walk(.x = toPrint, .f = function(x){
